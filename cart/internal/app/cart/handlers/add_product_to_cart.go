@@ -2,8 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
+	"github.com/pkg/errors"
 	"net/http"
 	"route256/cart/internal/app/cart"
+	errorapp "route256/cart/internal/app/pkg/errors"
 	"route256/cart/internal/app/pkg/model"
 	"strconv"
 )
@@ -36,6 +38,11 @@ func (i *Implementation) AddItemToCart(w http.ResponseWriter, r *http.Request) {
 
 	err = i.cartService.AddItem(r.Context(), userID, model.SKU(sku), body.Count)
 	if err != nil {
+		if errors.Is(err, errorapp.NotFoundInPS) {
+			cart.WriteResponse(w, []byte("item not found"), http.StatusNotFound)
+			return
+		}
+
 		cart.WriteResponse(w, []byte("add item error"), http.StatusInternalServerError)
 		return
 	}
