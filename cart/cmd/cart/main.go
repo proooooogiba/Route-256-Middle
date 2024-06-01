@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	zapLogger, err := zap.NewProduction()
+	zapLogger, err := zap.NewDevelopment()
 	if err != nil {
 		log.Printf("error in logger start")
 		return
@@ -48,8 +48,7 @@ func main() {
 	router.HandleFunc("DELETE /user/{user_id}/cart", cartServer.ClearCart)
 	router.HandleFunc("GET /user/{user_id}/cart/list", cartServer.ListCartProducts)
 
-	logRequestMiddleware := middleware.LoggingRequestMiddleware(router)
-	mux := middleware.RequestInitMiddleware(logRequestMiddleware)
+	mux := middleware.LoggingRequestMiddleware(router)
 
 	logger.Infow("starting server", "type", "START")
 

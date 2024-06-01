@@ -8,19 +8,8 @@ import (
 
 func LoggingRequestMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		logger, err := GetLoggerFromContext(r.Context())
-		if err != nil {
-			log.Printf("can't get logger from context: %s", err)
-			WriteNoLoggerResponse(w)
-		}
-		logger.Infof("access log middleware start")
 		start := time.Now()
 		next.ServeHTTP(w, r)
-		logger.Infow("New request",
-			"method", r.Method,
-			"remote_addr", r.RemoteAddr,
-			"url", r.URL.Path,
-			"time", time.Since(start),
-		)
+		log.Printf("New Request method: %s remote_addr: %s url: %s time: %s", r.Method, r.RemoteAddr, r.URL, time.Since(start).String())
 	})
 }
