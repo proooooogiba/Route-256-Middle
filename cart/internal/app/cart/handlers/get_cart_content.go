@@ -2,8 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"route256/cart/internal/app/cart"
+	errorapp "route256/cart/internal/app/pkg/errors"
 	"route256/cart/internal/app/pkg/model"
 	"strconv"
 )
@@ -16,7 +18,7 @@ type ListCartProductsResponse struct {
 type Item struct {
 	SKU   model.SKU `json:"sku_id"`
 	Name  string    `json:"name"`
-	Count uint16    `json:"cost"`
+	Count uint16    `json:"count"`
 	Price uint32    `json:"price"`
 }
 
@@ -28,8 +30,17 @@ func (i *Implementation) ListCartProducts(w http.ResponseWriter, r *http.Request
 		return
 	}
 
+	if userID <= 0 {
+		cart.WriteResponse(w, []byte("invalid user_id"), http.StatusBadRequest)
+		return
+	}
+
 	products, err := i.cartService.ListProducts(r.Context(), userID)
 	if err != nil {
+		if errors.Is(err, errorapp.ErrNotFoundUser) {
+			cart.WriteResponse(w, []byte("user not found"), http.StatusNotFound)
+			return
+		}
 		cart.WriteResponse(w, []byte("list products error"), http.StatusInternalServerError)
 		return
 	}

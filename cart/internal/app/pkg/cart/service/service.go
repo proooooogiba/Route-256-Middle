@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/pkg/errors"
 	"route256/cart/internal/app/cart/handlers"
 	errorapp "route256/cart/internal/app/pkg/errors"
@@ -33,15 +32,13 @@ func NewService(repository Repository, productService ProductService) *Service {
 }
 
 func (c *Service) AddItem(ctx context.Context, userID int64, sku model.SKU, count uint16) error {
-	product, err := c.productService.GetProductBySKU(ctx, sku)
+	_, err := c.productService.GetProductBySKU(ctx, sku)
 	if err != nil {
-		if errors.Is(err, errorapp.NotFoundInPS) {
+		if errors.Is(err, errorapp.ErrNotFoundInPS) {
 			return err
 		}
 		return errors.Wrap(err, "productService.GetProductBySKU")
 	}
-
-	fmt.Println(product)
 
 	item := model.Item{
 		SKU:   sku,
@@ -67,6 +64,9 @@ func (c *Service) Clear(ctx context.Context, userID int64) error {
 func (c *Service) ListProducts(ctx context.Context, userID int64) (*handlers.ListCartProductsResponse, error) {
 	items, err := c.repo.GetItemsByUserID(ctx, userID)
 	if err != nil {
+		if errors.Is(err, errorapp.ErrNotFoundUser) {
+			return nil, err
+		}
 		return nil, errors.Wrap(err, "repo.GetItemsByUserID")
 	}
 

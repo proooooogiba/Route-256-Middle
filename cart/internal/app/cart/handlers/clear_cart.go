@@ -14,6 +14,11 @@ func (i *Implementation) ClearCart(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if userID <= 0 {
+		cart.WriteResponse(w, []byte("invalid user_id"), http.StatusBadRequest)
+		return
+	}
+
 	err = i.cartService.Clear(r.Context(), userID)
 	if err != nil {
 		cart.WriteResponse(w, []byte("clear cart error"), http.StatusInternalServerError)

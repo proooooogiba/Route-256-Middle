@@ -36,10 +36,15 @@ func (i *Implementation) AddItemToCart(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if sku <= 0 || body.Count <= 0 || userID <= 0 {
+		cart.WriteResponse(w, []byte("invalid body"), http.StatusBadRequest)
+		return
+	}
+
 	err = i.cartService.AddItem(r.Context(), userID, model.SKU(sku), body.Count)
 	if err != nil {
-		if errors.Is(err, errorapp.NotFoundInPS) {
-			cart.WriteResponse(w, []byte("item not found"), http.StatusNotFound)
+		if errors.Is(err, errorapp.ErrNotFoundInPS) {
+			cart.WriteResponse(w, []byte("invalid sku"), http.StatusPreconditionFailed)
 			return
 		}
 
@@ -47,6 +52,6 @@ func (i *Implementation) AddItemToCart(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cart.WriteResponse(w, []byte(`{}`), http.StatusCreated)
+	cart.WriteResponse(w, []byte(`{}`), http.StatusOK)
 	return
 }

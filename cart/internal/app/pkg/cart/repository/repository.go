@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"errors"
+	errorapp "route256/cart/internal/app/pkg/errors"
 	"route256/cart/internal/app/pkg/model"
 	"sort"
 )
@@ -19,25 +19,25 @@ func NewRepository() *InMemoryRepository {
 	}
 }
 
-func (r *InMemoryRepository) AddItem(ctx context.Context, userID int64, sku model.Item) error {
-	// validation
+func (r *InMemoryRepository) AddItem(ctx context.Context, userID int64, item model.Item) error {
 	cart, ok := r.storage[userID]
 	if !ok {
 		r.storage[userID] = model.Cart{
-			Items: []model.Item{sku},
+			Items: []model.Item{item},
 		}
+		return nil
 	}
 
 	found := false
-	for _, cartItem := range cart.Items {
-		if cartItem.SKU == sku.SKU {
-			cartItem.Count += sku.Count
+	for i := range cart.Items {
+		if cart.Items[i].SKU == item.SKU {
+			cart.Items[i].Count += item.Count
 			found = true
 			break
 		}
 	}
 	if !found {
-		cart.Items = append(cart.Items, sku)
+		cart.Items = append(cart.Items, item)
 	}
 
 	sort.Slice(cart.Items, func(i, j int) bool {
@@ -50,22 +50,21 @@ func (r *InMemoryRepository) AddItem(ctx context.Context, userID int64, sku mode
 }
 
 func (r *InMemoryRepository) DeleteItem(ctx context.Context, userID int64, sku model.SKU) error {
-	// validation
-	cart, _ := r.storage[userID]
+	cart, ok := r.storage[userID]
+	if !ok {
+		return errorapp.ErrNotFoundUser
+	}
 	for _, cartItem := range cart.Items {
 		if cartItem.SKU == sku {
 			delete(r.storage, userID)
-			break
+			return nil
 		}
 	}
-
-	r.storage[userID] = cart
 
 	return nil
 }
 
 func (r *InMemoryRepository) Clear(ctx context.Context, userID int64) error {
-	// validation
 	_, ok := r.storage[userID]
 	if !ok {
 		return nil
@@ -79,9 +78,7 @@ func (r *InMemoryRepository) Clear(ctx context.Context, userID int64) error {
 func (r *InMemoryRepository) GetItemsByUserID(ctx context.Context, userID int64) ([]model.Item, error) {
 	cart, ok := r.storage[userID]
 	if !ok {
-		return nil, errNotFound
+		return nil, errorapp.ErrNotFoundUser
 	}
 	return cart.Items, nil
 }
-
-var errNotFound = errors.New("not found")

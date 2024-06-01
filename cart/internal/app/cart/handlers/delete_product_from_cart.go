@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"github.com/pkg/errors"
 	"net/http"
 	"route256/cart/internal/app/cart"
+	errorapp "route256/cart/internal/app/pkg/errors"
 	"route256/cart/internal/app/pkg/model"
 	"strconv"
 )
@@ -21,8 +23,18 @@ func (i *Implementation) DeleteProductFromCart(w http.ResponseWriter, r *http.Re
 		cart.WriteResponse(w, []byte("parse sku_id error"), http.StatusBadRequest)
 		return
 	}
+
+	if sku <= 0 || userID <= 0 {
+		cart.WriteResponse(w, []byte("invalid params"), http.StatusBadRequest)
+		return
+	}
+
 	err = i.cartService.DeleteItem(r.Context(), userID, model.SKU(sku))
 	if err != nil {
+		if errors.Is(err, errorapp.ErrNotFoundUser) {
+			cart.WriteResponse(w, []byte("invalid user"), http.StatusBadRequest)
+			return
+		}
 		cart.WriteResponse(w, []byte("delete item error"), http.StatusInternalServerError)
 		return
 	}

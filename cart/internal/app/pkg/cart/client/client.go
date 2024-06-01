@@ -68,7 +68,7 @@ func (c *ProductService) GetProductBySKU(ctx context.Context, sku model.SKU) (*m
 	}
 
 	if productRaw.Name == "" && productRaw.Price == 0 {
-		return nil, errorapp.NotFoundInPS
+		return nil, errorapp.ErrNotFoundInPS
 	}
 
 	product := &model.Product{
