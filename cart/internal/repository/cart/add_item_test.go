@@ -117,3 +117,23 @@ func (s *RepoTestSuite) TestAddItem() {
 		s.clean()
 	})
 }
+
+func BenchmarkAddItem(b *testing.B) {
+	ctx := context.Background()
+	repo := &InMemoryRepository{
+		items: make(map[int64]model.Cart),
+	}
+	userID := int64(1)
+	item := model.Item{
+		SKU:   12345,
+		Count: 1,
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		err := repo.AddItem(ctx, userID, item)
+		if err != nil {
+			b.Error(err)
+		}
+	}
+}

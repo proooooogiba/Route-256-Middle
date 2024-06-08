@@ -66,3 +66,24 @@ func (s *RepoTestSuite) TestDeleteItem() {
 		assert.Equal(t, item, items[0])
 	})
 }
+
+func BenchmarkDeleteItem(b *testing.B) {
+	ctx := context.Background()
+	repo := &InMemoryRepository{
+		items: make(map[int64]model.Cart),
+	}
+	userID := int64(1)
+	sku := model.SKU(12345)
+
+	repo.AddItem(ctx, userID, model.Item{SKU: sku, Count: 1})
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		err := repo.DeleteItem(ctx, userID, sku)
+		if err != nil {
+			b.Error(err)
+		}
+
+		repo.AddItem(ctx, userID, model.Item{SKU: sku, Count: 1})
+	}
+}
