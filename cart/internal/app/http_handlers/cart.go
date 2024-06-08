@@ -1,8 +1,8 @@
-package handlers
+package http_handlers
 
 import (
 	"context"
-	"route256/cart/internal/app/pkg/model"
+	"route256/cart/internal/model"
 )
 
 type CartServer interface {
