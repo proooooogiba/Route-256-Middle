@@ -1,0 +1,29 @@
+package product_service
+
+import "github.com/pkg/errors"
+
+type ProductService struct {
+	basePath string
+	token    string
+}
+
+func NewProductServiceClient(basePath string, token string) (*ProductService, error) {
+	if token == "" {
+		return nil, errors.New("product service has empty auth token")
+	}
+
+	return &ProductService{
+		token:    token,
+		basePath: basePath,
+	}, nil
+}
+
+type GetProductsRequest struct {
+	Token string `json:"token"`
+	Sku   uint32 `json:"sku"`
+}
+
+type GetProductsResponse struct {
+	Name  string `json:"name"`
+	Price uint32 `json:"price"`
+}

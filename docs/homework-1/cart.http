@@ -63,7 +63,7 @@ Content-Type: application/json
 
 # ========================================================================================
 
-### delete whole sku from cart
+### delete sku from cart
 DELETE http://localhost:8082/user/31337/cart/1076963
 Content-Type: application/json
 ### expected {} 204 OK; must delete item from cart

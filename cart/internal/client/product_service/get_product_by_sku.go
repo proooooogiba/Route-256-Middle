@@ -1,38 +1,23 @@
-package client
+package product_service
 
 import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/pkg/errors"
 	"io"
 	"net/http"
-	errorapp "route256/cart/internal/app/pkg/errors"
-	"route256/cart/internal/app/pkg/model"
+	"net/url"
+	errorapp "route256/cart/internal/errors"
+	"route256/cart/internal/model"
 	"time"
 )
 
-const token = "testtoken"
-
-type ProductService struct {
-}
-
-func NewProductServiceClient() *ProductService {
-	return &ProductService{}
-}
-
-type GetProductsRequest struct {
-	Token string `json:"token"`
-	Sku   uint32 `json:"sku"`
-}
-
-type GetProductsResponse struct {
-	Name  string `json:"name"`
-	Price uint32 `json:"price"`
-}
+const handlerGetProduct = "get_product"
 
 func (c *ProductService) GetProductBySKU(ctx context.Context, sku model.SKU) (*model.Product, error) {
 	data := &GetProductsRequest{
-		Token: token,
+		Token: c.token,
 		Sku:   uint32(sku),
 	}
 
@@ -41,8 +26,12 @@ func (c *ProductService) GetProductBySKU(ctx context.Context, sku model.SKU) (*m
 		return nil, err
 	}
 
-	url := "http://route256.pavl.uk:8080/get_product"
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewBuffer(marshalData))
+	path, err := url.JoinPath(c.basePath, handlerGetProduct)
+	if err != nil {
+		return nil, errors.Wrapf(err, "incorrect base basePath for %q", handlerGetProduct)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "POST", path, bytes.NewBuffer(marshalData))
 	if err != nil {
 		return nil, err
 	}
@@ -71,10 +60,5 @@ func (c *ProductService) GetProductBySKU(ctx context.Context, sku model.SKU) (*m
 		return nil, errorapp.ErrNotFoundInPS
 	}
 
-	product := &model.Product{
-		SKU:   sku,
-		Name:  productRaw.Name,
-		Price: productRaw.Price,
-	}
-	return product, nil
+	return getProduct(sku, productRaw), nil
 }

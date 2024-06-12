@@ -1,11 +1,10 @@
-package handlers
+package http_handlers
 
 import (
 	"github.com/pkg/errors"
 	"net/http"
-	"route256/cart/internal/app/cart"
-	errorapp "route256/cart/internal/app/pkg/errors"
-	"route256/cart/internal/app/pkg/model"
+	errorapp "route256/cart/internal/errors"
+	"route256/cart/internal/model"
 	"strconv"
 )
 
@@ -13,32 +12,32 @@ func (i *Implementation) DeleteProductFromCart(w http.ResponseWriter, r *http.Re
 	userIDRaw := r.PathValue("user_id")
 	userID, err := strconv.ParseInt(userIDRaw, 10, 64)
 	if err != nil {
-		cart.WriteResponse(w, []byte("parse user_id error"), http.StatusBadRequest)
+		WriteErrorResponse(w, errors.Wrap(err, "parse user_id error"), http.StatusBadRequest)
 		return
 	}
 
 	skuRaw := r.PathValue("sku_id")
 	sku, err := strconv.ParseInt(skuRaw, 10, 64)
 	if err != nil {
-		cart.WriteResponse(w, []byte("parse sku_id error"), http.StatusBadRequest)
+		WriteErrorResponse(w, errors.Wrap(err, "parse sku_id error"), http.StatusBadRequest)
 		return
 	}
 
 	if sku <= 0 || userID <= 0 {
-		cart.WriteResponse(w, []byte("invalid params"), http.StatusBadRequest)
+		WriteErrorResponse(w, errorapp.ErrInvalidParams, http.StatusBadRequest)
 		return
 	}
 
 	err = i.cartService.DeleteItem(r.Context(), userID, model.SKU(sku))
 	if err != nil {
 		if errors.Is(err, errorapp.ErrNotFoundUser) {
-			cart.WriteResponse(w, []byte("invalid user"), http.StatusBadRequest)
+			WriteErrorResponse(w, errorapp.ErrNotFoundUser, http.StatusNotFound)
 			return
 		}
-		cart.WriteResponse(w, []byte("delete item error"), http.StatusInternalServerError)
+		WriteErrorResponse(w, errors.Wrap(err, "delete item error"), http.StatusNotFound)
 		return
 	}
 
-	cart.WriteResponse(w, []byte(`{}`), http.StatusNoContent)
+	WriteResponse(w, []byte(`{}`), http.StatusNoContent)
 	return
 }

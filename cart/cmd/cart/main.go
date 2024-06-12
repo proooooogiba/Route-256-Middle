@@ -1,59 +1,25 @@
 package main
 
 import (
-	"go.uber.org/zap"
+	"github.com/pkg/errors"
 	"log"
-	"net"
 	"net/http"
-	"route256/cart/internal/app/cart/handlers"
-	"route256/cart/internal/app/pkg/cart/client"
-	"route256/cart/internal/app/pkg/cart/repository"
-	"route256/cart/internal/app/pkg/cart/service"
-	"route256/cart/internal/app/pkg/middleware"
+	"route256/cart/internal/app"
 )
 
 func main() {
-	zapLogger, err := zap.NewDevelopment()
+	initOpts()
+	service, err := app.NewApp(app.NewConfig(opts))
 	if err != nil {
-		log.Printf("error in logger start")
-		return
-	}
-	logger := zapLogger.Sugar()
-	defer func() {
-		err = logger.Sync()
-		if err != nil {
-			log.Printf("error in logger sync")
-		}
-	}()
-	logger.Info("starting app")
-
-	conn, err := net.Listen("tcp", "0.0.0.0:8080")
-	if err != nil {
-		logger.Fatalw("error in listen", "err", err)
+		log.Fatal("{FATAL} ", err)
 	}
 
-	defer conn.Close()
-
-	logger.Info("starting listen")
-
-	reviewsRepository := repository.NewRepository()
-	productService := client.NewProductServiceClient()
-	cartService := service.NewService(reviewsRepository, productService)
-
-	cartServer := handlers.NewCart(cartService)
-
-	router := http.NewServeMux()
-	router.HandleFunc("POST /user/{user_id}/cart/{sku_id}", cartServer.AddItemToCart)
-	router.HandleFunc("DELETE /user/{user_id}/cart/{sku_id}", cartServer.DeleteProductFromCart)
-	router.HandleFunc("DELETE /user/{user_id}/cart", cartServer.ClearCart)
-	router.HandleFunc("GET /user/{user_id}/cart/list", cartServer.ListCartProducts)
-
-	mux := middleware.LoggingRequestMiddleware(router)
-
-	logger.Infow("starting server", "type", "START")
-
-	if err := http.Serve(conn, mux); err != nil {
-		logger.Fatalw("error in serve", "err", err)
+	err = service.ListenAndServe()
+	if errors.Is(err, http.ErrServerClosed) {
+		log.Fatal("server closed\n")
+	}
+	if err != nil {
+		log.Fatalf("error starting server: %s\n", err)
 	}
 	return
 }
