@@ -12,9 +12,9 @@ func (c *Order) CreateOrder(ctx context.Context, userID int64, items []*model.It
 
 	err := c.stockRepo.Reserve(ctx, order.Items)
 	if err != nil {
-		err = c.orderRepo.SetStatus(ctx, order.ID, model.Failed)
-		if err != nil {
-			return 0, errors.Wrap(err, "orderRepo.SetStatus")
+		errStatus := c.orderRepo.SetStatus(ctx, order.ID, model.Failed)
+		if errStatus != nil {
+			return 0, errors.Wrap(errStatus, "orderRepo.SetStatus")
 		}
 
 		if errors.Is(err, errorapp.ErrSkuNotFound) || errors.Is(err, errorapp.ErrOutOfStock) {

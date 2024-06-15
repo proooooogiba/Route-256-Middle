@@ -8,4 +8,5 @@ var (
 	ErrOrderNotFound = errors.New("order not found")
 	ErrStockNotFound = errors.New("stock not found")
 	ErrSkuNotFound   = errors.New("sku not found")
+	ErrNoNil         = errors.New("err no nil")
 )

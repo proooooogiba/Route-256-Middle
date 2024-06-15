@@ -2,8 +2,8 @@ package model
 
 type Status string
 
-func (s *Status) String() string {
-	return string(*s)
+func (s Status) String() string {
+	return string(s)
 }
 
 const ( // iota is reset to 0
