@@ -40,6 +40,10 @@ func (i *Implementation) ListCartProducts(w http.ResponseWriter, r *http.Request
 			WriteErrorResponse(w, errorapp.ErrNotFoundUser, http.StatusNotFound)
 			return
 		}
+		if errors.Is(err, errorapp.ErrOutOfStock) {
+			WriteErrorResponse(w, errorapp.ErrOutOfStock, http.StatusPreconditionFailed)
+			return
+		}
 		WriteErrorResponse(w, errors.Wrap(err, "list products error"), http.StatusInternalServerError)
 		return
 	}

@@ -16,6 +16,15 @@ func (c *Service) AddItem(ctx context.Context, userID int64, sku model.SKU, coun
 		return errors.Wrap(err, "productService.GetProductBySKU")
 	}
 
+	stockItem, err := c.lomsService.StocksInfo(ctx, sku)
+	if err != nil {
+		return errors.Wrap(err, "lomsService.StocksInfo")
+	}
+
+	if stockItem.Count < uint64(count) {
+		return errorapp.ErrOutOfStock
+	}
+
 	item := model.Item{
 		SKU:   sku,
 		Count: count,

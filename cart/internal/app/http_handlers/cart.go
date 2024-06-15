@@ -10,6 +10,7 @@ type CartService interface {
 	DeleteItem(ctx context.Context, userID int64, sku model.SKU) error
 	Clear(ctx context.Context, userID int64) error
 	ListProducts(ctx context.Context, userID int64) (*ListCartProductsResponse, error)
+	Checkout(ctx context.Context, userID int64) (*CheckoutResponse, error)
 }
 
 type Implementation struct {

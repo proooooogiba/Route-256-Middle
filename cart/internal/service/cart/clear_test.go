@@ -7,7 +7,7 @@ import (
 )
 
 func (s *cartServiceTestSuite) TestClear() {
-	s.T().Run("failed on repo.Clear", func(t *testing.T) {
+	s.T().Run("failed on repo.DeleteItemsByUserID", func(t *testing.T) {
 		var (
 			ctx          = context.Background()
 			userID int64 = 1

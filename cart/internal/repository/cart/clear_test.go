@@ -15,7 +15,7 @@ func (s *RepoTestSuite) TestClear() {
 			userID int64 = 1
 		)
 
-		err := s.repo.Clear(ctx, userID)
+		err := s.repo.DeleteItemsByUserID(ctx, userID)
 		assert.Equal(t, errorapp.ErrNotFoundUser, err)
 	})
 
@@ -41,7 +41,7 @@ func (s *RepoTestSuite) TestClear() {
 		err = s.repo.AddItem(ctx, userID, item2)
 		assert.NoError(t, err)
 
-		err = s.repo.Clear(ctx, userID)
+		err = s.repo.DeleteItemsByUserID(ctx, userID)
 		assert.NoError(t, err)
 
 		items, err := s.repo.GetItemsByUserID(ctx, userID)

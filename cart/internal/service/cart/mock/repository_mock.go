@@ -429,7 +429,7 @@ type mRepositoryMockClear struct {
 	expectedInvocations uint64
 }
 
-// RepositoryMockClearExpectation specifies expectation struct of the Repository.Clear
+// RepositoryMockClearExpectation specifies expectation struct of the Repository.DeleteItemsByUserID
 type RepositoryMockClearExpectation struct {
 	mock      *RepositoryMock
 	params    *RepositoryMockClearParams
@@ -438,19 +438,19 @@ type RepositoryMockClearExpectation struct {
 	Counter   uint64
 }
 
-// RepositoryMockClearParams contains parameters of the Repository.Clear
+// RepositoryMockClearParams contains parameters of the Repository.DeleteItemsByUserID
 type RepositoryMockClearParams struct {
 	ctx    context.Context
 	userID int64
 }
 
-// RepositoryMockClearParamPtrs contains pointers to parameters of the Repository.Clear
+// RepositoryMockClearParamPtrs contains pointers to parameters of the Repository.DeleteItemsByUserID
 type RepositoryMockClearParamPtrs struct {
 	ctx    *context.Context
 	userID *int64
 }
 
-// RepositoryMockClearResults contains results of the Repository.Clear
+// RepositoryMockClearResults contains results of the Repository.DeleteItemsByUserID
 type RepositoryMockClearResults struct {
 	err error
 }
@@ -465,10 +465,10 @@ func (mmClear *mRepositoryMockClear) Optional() *mRepositoryMockClear {
 	return mmClear
 }
 
-// Expect sets up expected params for Repository.Clear
+// Expect sets up expected params for Repository.DeleteItemsByUserID
 func (mmClear *mRepositoryMockClear) Expect(ctx context.Context, userID int64) *mRepositoryMockClear {
 	if mmClear.mock.funcClear != nil {
-		mmClear.mock.t.Fatalf("RepositoryMock.Clear mock is already set by Set")
+		mmClear.mock.t.Fatalf("RepositoryMock.DeleteItemsByUserID mock is already set by Set")
 	}
 
 	if mmClear.defaultExpectation == nil {
@@ -476,7 +476,7 @@ func (mmClear *mRepositoryMockClear) Expect(ctx context.Context, userID int64) *
 	}
 
 	if mmClear.defaultExpectation.paramPtrs != nil {
-		mmClear.mock.t.Fatalf("RepositoryMock.Clear mock is already set by ExpectParams functions")
+		mmClear.mock.t.Fatalf("RepositoryMock.DeleteItemsByUserID mock is already set by ExpectParams functions")
 	}
 
 	mmClear.defaultExpectation.params = &RepositoryMockClearParams{ctx, userID}
@@ -489,10 +489,10 @@ func (mmClear *mRepositoryMockClear) Expect(ctx context.Context, userID int64) *
 	return mmClear
 }
 
-// ExpectCtxParam1 sets up expected param ctx for Repository.Clear
+// ExpectCtxParam1 sets up expected param ctx for Repository.DeleteItemsByUserID
 func (mmClear *mRepositoryMockClear) ExpectCtxParam1(ctx context.Context) *mRepositoryMockClear {
 	if mmClear.mock.funcClear != nil {
-		mmClear.mock.t.Fatalf("RepositoryMock.Clear mock is already set by Set")
+		mmClear.mock.t.Fatalf("RepositoryMock.DeleteItemsByUserID mock is already set by Set")
 	}
 
 	if mmClear.defaultExpectation == nil {
@@ -500,7 +500,7 @@ func (mmClear *mRepositoryMockClear) ExpectCtxParam1(ctx context.Context) *mRepo
 	}
 
 	if mmClear.defaultExpectation.params != nil {
-		mmClear.mock.t.Fatalf("RepositoryMock.Clear mock is already set by Expect")
+		mmClear.mock.t.Fatalf("RepositoryMock.DeleteItemsByUserID mock is already set by Expect")
 	}
 
 	if mmClear.defaultExpectation.paramPtrs == nil {
@@ -511,10 +511,10 @@ func (mmClear *mRepositoryMockClear) ExpectCtxParam1(ctx context.Context) *mRepo
 	return mmClear
 }
 
-// ExpectUserIDParam2 sets up expected param userID for Repository.Clear
+// ExpectUserIDParam2 sets up expected param userID for Repository.DeleteItemsByUserID
 func (mmClear *mRepositoryMockClear) ExpectUserIDParam2(userID int64) *mRepositoryMockClear {
 	if mmClear.mock.funcClear != nil {
-		mmClear.mock.t.Fatalf("RepositoryMock.Clear mock is already set by Set")
+		mmClear.mock.t.Fatalf("RepositoryMock.DeleteItemsByUserID mock is already set by Set")
 	}
 
 	if mmClear.defaultExpectation == nil {
@@ -522,7 +522,7 @@ func (mmClear *mRepositoryMockClear) ExpectUserIDParam2(userID int64) *mReposito
 	}
 
 	if mmClear.defaultExpectation.params != nil {
-		mmClear.mock.t.Fatalf("RepositoryMock.Clear mock is already set by Expect")
+		mmClear.mock.t.Fatalf("RepositoryMock.DeleteItemsByUserID mock is already set by Expect")
 	}
 
 	if mmClear.defaultExpectation.paramPtrs == nil {
@@ -533,10 +533,10 @@ func (mmClear *mRepositoryMockClear) ExpectUserIDParam2(userID int64) *mReposito
 	return mmClear
 }
 
-// Inspect accepts an inspector function that has same arguments as the Repository.Clear
+// Inspect accepts an inspector function that has same arguments as the Repository.DeleteItemsByUserID
 func (mmClear *mRepositoryMockClear) Inspect(f func(ctx context.Context, userID int64)) *mRepositoryMockClear {
 	if mmClear.mock.inspectFuncClear != nil {
-		mmClear.mock.t.Fatalf("Inspect function is already set for RepositoryMock.Clear")
+		mmClear.mock.t.Fatalf("Inspect function is already set for RepositoryMock.DeleteItemsByUserID")
 	}
 
 	mmClear.mock.inspectFuncClear = f
@@ -544,10 +544,10 @@ func (mmClear *mRepositoryMockClear) Inspect(f func(ctx context.Context, userID 
 	return mmClear
 }
 
-// Return sets up results that will be returned by Repository.Clear
+// Return sets up results that will be returned by Repository.DeleteItemsByUserID
 func (mmClear *mRepositoryMockClear) Return(err error) *RepositoryMock {
 	if mmClear.mock.funcClear != nil {
-		mmClear.mock.t.Fatalf("RepositoryMock.Clear mock is already set by Set")
+		mmClear.mock.t.Fatalf("RepositoryMock.DeleteItemsByUserID mock is already set by Set")
 	}
 
 	if mmClear.defaultExpectation == nil {
@@ -557,25 +557,25 @@ func (mmClear *mRepositoryMockClear) Return(err error) *RepositoryMock {
 	return mmClear.mock
 }
 
-// Set uses given function f to mock the Repository.Clear method
+// Set uses given function f to mock the Repository.DeleteItemsByUserID method
 func (mmClear *mRepositoryMockClear) Set(f func(ctx context.Context, userID int64) (err error)) *RepositoryMock {
 	if mmClear.defaultExpectation != nil {
-		mmClear.mock.t.Fatalf("Default expectation is already set for the Repository.Clear method")
+		mmClear.mock.t.Fatalf("Default expectation is already set for the Repository.DeleteItemsByUserID method")
 	}
 
 	if len(mmClear.expectations) > 0 {
-		mmClear.mock.t.Fatalf("Some expectations are already set for the Repository.Clear method")
+		mmClear.mock.t.Fatalf("Some expectations are already set for the Repository.DeleteItemsByUserID method")
 	}
 
 	mmClear.mock.funcClear = f
 	return mmClear.mock
 }
 
-// When sets expectation for the Repository.Clear which will trigger the result defined by the following
+// When sets expectation for the Repository.DeleteItemsByUserID which will trigger the result defined by the following
 // Then helper
 func (mmClear *mRepositoryMockClear) When(ctx context.Context, userID int64) *RepositoryMockClearExpectation {
 	if mmClear.mock.funcClear != nil {
-		mmClear.mock.t.Fatalf("RepositoryMock.Clear mock is already set by Set")
+		mmClear.mock.t.Fatalf("RepositoryMock.DeleteItemsByUserID mock is already set by Set")
 	}
 
 	expectation := &RepositoryMockClearExpectation{
@@ -586,16 +586,16 @@ func (mmClear *mRepositoryMockClear) When(ctx context.Context, userID int64) *Re
 	return expectation
 }
 
-// Then sets up Repository.Clear return parameters for the expectation previously defined by the When method
+// Then sets up Repository.DeleteItemsByUserID return parameters for the expectation previously defined by the When method
 func (e *RepositoryMockClearExpectation) Then(err error) *RepositoryMock {
 	e.results = &RepositoryMockClearResults{err}
 	return e.mock
 }
 
-// Times sets number of times Repository.Clear should be invoked
+// Times sets number of times Repository.DeleteItemsByUserID should be invoked
 func (mmClear *mRepositoryMockClear) Times(n uint64) *mRepositoryMockClear {
 	if n == 0 {
-		mmClear.mock.t.Fatalf("Times of RepositoryMock.Clear mock can not be zero")
+		mmClear.mock.t.Fatalf("Times of RepositoryMock.DeleteItemsByUserID mock can not be zero")
 	}
 	mm_atomic.StoreUint64(&mmClear.expectedInvocations, n)
 	return mmClear
@@ -613,7 +613,7 @@ func (mmClear *mRepositoryMockClear) invocationsDone() bool {
 }
 
 // Clear implements cart.Repository
-func (mmClear *RepositoryMock) Clear(ctx context.Context, userID int64) (err error) {
+func (mmClear *RepositoryMock) DeleteItemsByUserID(ctx context.Context, userID int64) (err error) {
 	mm_atomic.AddUint64(&mmClear.beforeClearCounter, 1)
 	defer mm_atomic.AddUint64(&mmClear.afterClearCounter, 1)
 
@@ -645,27 +645,27 @@ func (mmClear *RepositoryMock) Clear(ctx context.Context, userID int64) (err err
 		if mm_want_ptrs != nil {
 
 			if mm_want_ptrs.ctx != nil && !minimock.Equal(*mm_want_ptrs.ctx, mm_got.ctx) {
-				mmClear.t.Errorf("RepositoryMock.Clear got unexpected parameter ctx, want: %#v, got: %#v%s\n", *mm_want_ptrs.ctx, mm_got.ctx, minimock.Diff(*mm_want_ptrs.ctx, mm_got.ctx))
+				mmClear.t.Errorf("RepositoryMock.DeleteItemsByUserID got unexpected parameter ctx, want: %#v, got: %#v%s\n", *mm_want_ptrs.ctx, mm_got.ctx, minimock.Diff(*mm_want_ptrs.ctx, mm_got.ctx))
 			}
 
 			if mm_want_ptrs.userID != nil && !minimock.Equal(*mm_want_ptrs.userID, mm_got.userID) {
-				mmClear.t.Errorf("RepositoryMock.Clear got unexpected parameter userID, want: %#v, got: %#v%s\n", *mm_want_ptrs.userID, mm_got.userID, minimock.Diff(*mm_want_ptrs.userID, mm_got.userID))
+				mmClear.t.Errorf("RepositoryMock.DeleteItemsByUserID got unexpected parameter userID, want: %#v, got: %#v%s\n", *mm_want_ptrs.userID, mm_got.userID, minimock.Diff(*mm_want_ptrs.userID, mm_got.userID))
 			}
 
 		} else if mm_want != nil && !minimock.Equal(*mm_want, mm_got) {
-			mmClear.t.Errorf("RepositoryMock.Clear got unexpected parameters, want: %#v, got: %#v%s\n", *mm_want, mm_got, minimock.Diff(*mm_want, mm_got))
+			mmClear.t.Errorf("RepositoryMock.DeleteItemsByUserID got unexpected parameters, want: %#v, got: %#v%s\n", *mm_want, mm_got, minimock.Diff(*mm_want, mm_got))
 		}
 
 		mm_results := mmClear.ClearMock.defaultExpectation.results
 		if mm_results == nil {
-			mmClear.t.Fatal("No results are set for the RepositoryMock.Clear")
+			mmClear.t.Fatal("No results are set for the RepositoryMock.DeleteItemsByUserID")
 		}
 		return (*mm_results).err
 	}
 	if mmClear.funcClear != nil {
 		return mmClear.funcClear(ctx, userID)
 	}
-	mmClear.t.Fatalf("Unexpected call to RepositoryMock.Clear. %v %v", ctx, userID)
+	mmClear.t.Fatalf("Unexpected call to RepositoryMock.DeleteItemsByUserID. %v %v", ctx, userID)
 	return
 }
 
@@ -713,7 +713,7 @@ func (m *RepositoryMock) MinimockClearDone() bool {
 func (m *RepositoryMock) MinimockClearInspect() {
 	for _, e := range m.ClearMock.expectations {
 		if mm_atomic.LoadUint64(&e.Counter) < 1 {
-			m.t.Errorf("Expected call to RepositoryMock.Clear with params: %#v", *e.params)
+			m.t.Errorf("Expected call to RepositoryMock.DeleteItemsByUserID with params: %#v", *e.params)
 		}
 	}
 
@@ -721,18 +721,18 @@ func (m *RepositoryMock) MinimockClearInspect() {
 	// if default expectation was set then invocations count should be greater than zero
 	if m.ClearMock.defaultExpectation != nil && afterClearCounter < 1 {
 		if m.ClearMock.defaultExpectation.params == nil {
-			m.t.Error("Expected call to RepositoryMock.Clear")
+			m.t.Error("Expected call to RepositoryMock.DeleteItemsByUserID")
 		} else {
-			m.t.Errorf("Expected call to RepositoryMock.Clear with params: %#v", *m.ClearMock.defaultExpectation.params)
+			m.t.Errorf("Expected call to RepositoryMock.DeleteItemsByUserID with params: %#v", *m.ClearMock.defaultExpectation.params)
 		}
 	}
 	// if func was set then invocations count should be greater than zero
 	if m.funcClear != nil && afterClearCounter < 1 {
-		m.t.Error("Expected call to RepositoryMock.Clear")
+		m.t.Error("Expected call to RepositoryMock.DeleteItemsByUserID")
 	}
 
 	if !m.ClearMock.invocationsDone() && afterClearCounter > 0 {
-		m.t.Errorf("Expected %d calls to RepositoryMock.Clear but found %d calls",
+		m.t.Errorf("Expected %d calls to RepositoryMock.DeleteItemsByUserID but found %d calls",
 			mm_atomic.LoadUint64(&m.ClearMock.expectedInvocations), afterClearCounter)
 	}
 }
