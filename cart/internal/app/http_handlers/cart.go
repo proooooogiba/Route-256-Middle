@@ -5,7 +5,7 @@ import (
 	"route256/cart/internal/model"
 )
 
-type CartServer interface {
+type CartService interface {
 	AddItem(ctx context.Context, userID int64, sku model.SKU, count uint16) error
 	DeleteItem(ctx context.Context, userID int64, sku model.SKU) error
 	Clear(ctx context.Context, userID int64) error
@@ -13,11 +13,11 @@ type CartServer interface {
 }
 
 type Implementation struct {
-	cartService CartServer
+	cartService CartService
 }
 
 func NewCart(
-	cartService CartServer,
+	cartService CartService,
 ) *Implementation {
 	return &Implementation{cartService: cartService}
 }
