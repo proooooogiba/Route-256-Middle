@@ -112,7 +112,7 @@ vendor-proto/protoc-gen-openapiv2/options:
 	go mod tidy
 
 run-server:
-	go run ./cmd/server/main.go
+	go run ./cmd/loms/main.go
 
 # Вендоринг внешних proto файлов
 .vendor-proto: .vendor-rm  vendor-proto/google/protobuf vendor-proto/validate vendor-proto/google/api vendor-proto/protoc-gen-openapiv2/options
