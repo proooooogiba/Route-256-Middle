@@ -3,7 +3,7 @@ package order
 import (
 	"context"
 	"github.com/pkg/errors"
-	"route256/loms/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
 func (c *Order) OrderPay(ctx context.Context, id int64) error {

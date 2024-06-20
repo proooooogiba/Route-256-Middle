@@ -2,7 +2,7 @@ package cart
 
 import (
 	"context"
-	"route256/cart/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 )
 
 func (c *Service) DeleteItem(ctx context.Context, userID int64, sku model.SKU) error {

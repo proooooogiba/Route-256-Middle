@@ -2,7 +2,7 @@ package cart
 
 import (
 	"context"
-	"route256/cart/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"sort"
 )
 

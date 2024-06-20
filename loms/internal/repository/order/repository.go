@@ -1,7 +1,7 @@
 package order
 
 import (
-	"route256/loms/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 	"sync"
 )
 
@@ -11,10 +11,10 @@ type OrderInMemoryRepo struct {
 	mtx    sync.RWMutex
 }
 
-func NewStockRepository() (*OrderInMemoryRepo, error) {
+func NewOrderRepository() *OrderInMemoryRepo {
 	return &OrderInMemoryRepo{
 		orders: make(map[int64]*model.Order),
 		mtx:    sync.RWMutex{},
 		nextID: 1,
-	}, nil
+	}
 }

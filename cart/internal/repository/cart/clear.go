@@ -2,7 +2,7 @@ package cart
 
 import (
 	"context"
-	errorapp "route256/cart/internal/errors"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 )
 
 func (r *InMemoryRepository) DeleteItemsByUserID(ctx context.Context, userID int64) error {

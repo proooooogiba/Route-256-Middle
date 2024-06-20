@@ -2,8 +2,8 @@ package order
 
 import (
 	"context"
-	errorapp "route256/loms/internal/errors"
-	"route256/loms/internal/model"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/loms/internal/errors"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
 func (r *OrderInMemoryRepo) GetOrderByID(ctx context.Context, id int64) (*model.Order, error) {

@@ -3,8 +3,8 @@ package cart
 import (
 	"context"
 	"github.com/pkg/errors"
-	"route256/cart/internal/app/http_handlers"
-	errorapp "route256/cart/internal/errors"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/http_handlers"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 )
 
 func (c *Service) ListProducts(ctx context.Context, userID int64) (*http_handlers.ListCartProductsResponse, error) {

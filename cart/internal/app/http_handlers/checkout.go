@@ -3,8 +3,8 @@ package http_handlers
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 	"net/http"
-	errorapp "route256/cart/internal/errors"
 	"strconv"
 )
 

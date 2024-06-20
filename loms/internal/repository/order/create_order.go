@@ -2,7 +2,7 @@ package order
 
 import (
 	"context"
-	"route256/loms/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
 func (r *OrderInMemoryRepo) CreateOrder(ctx context.Context, userID int64, items []*model.Item) *model.Order {

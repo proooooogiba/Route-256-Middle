@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"route256/cart/internal/app"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app"
 )
 
 const (

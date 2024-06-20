@@ -2,8 +2,8 @@ package stock
 
 import (
 	"context"
-	errorapp "route256/loms/internal/errors"
-	"route256/loms/internal/model"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/loms/internal/errors"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
 func (r *StockInMemoryRepo) GetStockBySKU(ctx context.Context, sku model.SKU) (*model.Stock, error) {

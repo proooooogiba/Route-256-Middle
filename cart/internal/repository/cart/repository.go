@@ -1,7 +1,7 @@
 package cart
 
 import (
-	"route256/cart/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"sync"
 )
 

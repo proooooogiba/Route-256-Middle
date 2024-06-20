@@ -2,11 +2,11 @@
 
 package mock
 
-//go:generate minimock -i route256/loms/internal/service/order.IOrderRepo -o order_repo_mock.go -n OrderRepoMock -p mock
+//go:generate minimock -i gitlab.ozon.dev/ipogiba/homework/loms/internal/service/order.IOrderRepo -o order_repo_mock.go -n OrderRepoMock -p mock
 
 import (
 	"context"
-	"route256/loms/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 	"sync"
 	mm_atomic "sync/atomic"
 	mm_time "time"

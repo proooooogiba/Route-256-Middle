@@ -2,7 +2,7 @@ package app
 
 import (
 	"fmt"
-	"route256/cart/internal/app/definitions"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/definitions"
 )
 
 type (

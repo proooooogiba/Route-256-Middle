@@ -3,7 +3,7 @@ package cart
 import (
 	"context"
 	"github.com/stretchr/testify/require"
-	"route256/cart/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"testing"
 )
 

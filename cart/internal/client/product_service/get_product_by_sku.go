@@ -5,11 +5,11 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/pkg/errors"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"io"
 	"net/http"
 	"net/url"
-	errorapp "route256/cart/internal/errors"
-	"route256/cart/internal/model"
 	"time"
 )
 

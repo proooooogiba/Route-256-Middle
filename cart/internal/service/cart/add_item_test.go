@@ -6,8 +6,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"route256/cart/internal/model"
-	"route256/cart/internal/service/cart/mock"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart/mock"
 	"testing"
 )
 

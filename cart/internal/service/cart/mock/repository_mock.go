@@ -2,11 +2,11 @@
 
 package mock
 
-//go:generate minimock -i route256/cart/internal/service/cart.Repository -o repository_mock.go -n RepositoryMock -p mock
+//go:generate minimock -i gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart.Repository -o repository_mock.go -n RepositoryMock -p mock
 
 import (
 	"context"
-	"route256/cart/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"sync"
 	mm_atomic "sync/atomic"
 	mm_time "time"

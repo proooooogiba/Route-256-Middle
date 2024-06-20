@@ -3,7 +3,7 @@ package stock
 import (
 	"context"
 	"github.com/pkg/errors"
-	"route256/loms/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
 func (s *Stock) StockInfo(ctx context.Context, sku model.SKU) (uint64, error) {

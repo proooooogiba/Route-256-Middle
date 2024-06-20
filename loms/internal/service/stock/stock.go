@@ -2,7 +2,7 @@ package stock
 
 import (
 	"context"
-	"route256/loms/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
 type IStockRepo interface {

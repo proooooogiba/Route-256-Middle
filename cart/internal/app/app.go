@@ -1,12 +1,12 @@
 package app
 
 import (
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/http_handlers"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/middleware"
+	client "gitlab.ozon.dev/ipogiba/homework/cart/internal/client/product_service"
+	repository "gitlab.ozon.dev/ipogiba/homework/cart/internal/repository/cart"
+	service "gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart"
 	"net/http"
-	"route256/cart/internal/app/http_handlers"
-	"route256/cart/internal/app/middleware"
-	client "route256/cart/internal/client/product_service"
-	repository "route256/cart/internal/repository/cart"
-	service "route256/cart/internal/service/cart"
 )
 
 type App struct {
