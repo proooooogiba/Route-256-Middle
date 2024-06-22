@@ -16,7 +16,7 @@ func (c *Service) Checkout(ctx context.Context, userID int64) (*http_handlers.Ch
 		return nil, errors.Wrap(err, "repo.GetItemsByUserID")
 	}
 
-	err = c.lomsService.CreateOrder(ctx, userID, items)
+	orderID, err := c.lomsService.CreateOrder(ctx, userID, items)
 	if err != nil {
 		return nil, errors.Wrap(err, "lomsService.CreateOrder")
 	}
@@ -29,5 +29,7 @@ func (c *Service) Checkout(ctx context.Context, userID int64) (*http_handlers.Ch
 		return nil, err
 	}
 
-	return nil, nil
+	return &http_handlers.CheckoutResponse{
+		OrderID: orderID,
+	}, nil
 }

@@ -17,7 +17,7 @@ type ProductService interface {
 }
 
 type LomsService interface {
-	CreateOrder(ctx context.Context, userID int64, items []model.Item) error
+	CreateOrder(ctx context.Context, userID int64, items []model.Item) (int64, error)
 	StocksInfo(ctx context.Context, sku model.SKU) (*model.StockItem, error)
 }
 

@@ -13,7 +13,7 @@ func (s *cartServiceTestSuite) TestClear() {
 			userID int64 = 1
 		)
 
-		s.cartRepository.ClearMock.Expect(ctx, userID).Return(ErrNoNil)
+		s.cartRepository.DeleteItemsByUserIDMock.Expect(ctx, userID).Return(ErrNoNil)
 		err := s.srv.Clear(ctx, userID)
 		require.Error(t, err)
 	})
@@ -24,7 +24,7 @@ func (s *cartServiceTestSuite) TestClear() {
 			userID int64 = 1
 		)
 
-		s.cartRepository.ClearMock.Expect(ctx, userID).Return(nil)
+		s.cartRepository.DeleteItemsByUserIDMock.Expect(ctx, userID).Return(nil)
 		err := s.srv.Clear(ctx, userID)
 		require.NoError(t, err)
 	})

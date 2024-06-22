@@ -4,6 +4,8 @@ cover:
 test:
 	go test ./...
 
+build:
+	go build cmd/cart/*.go
 
 code-analysis:
 	@cd ..; echo "Обратите внимание на следующие файлы, возможно им требуется рефакторинг: " \

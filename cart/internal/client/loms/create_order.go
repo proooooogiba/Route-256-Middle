@@ -7,7 +7,7 @@ import (
 	"gitlab.ozon.dev/ipogiba/homework/cart/pkg/api/loms/v1"
 )
 
-func (c *LomsService) CreateOrder(ctx context.Context, userID int64, items []model.Item) error {
+func (c *LomsService) CreateOrder(ctx context.Context, userID int64, items []model.Item) (int64, error) {
 	convertedItems := make([]*loms.Item, 0, len(items))
 	for _, item := range items {
 		convertedItems = append(convertedItems, &loms.Item{
@@ -16,10 +16,13 @@ func (c *LomsService) CreateOrder(ctx context.Context, userID int64, items []mod
 		})
 	}
 
-	_, err := c.client.CreateOrder(ctx, &loms.CreateOrderRequest{
+	resp, err := c.client.CreateOrder(ctx, &loms.CreateOrderRequest{
 		UserId: userID,
 		Items:  convertedItems,
 	})
+	if err != nil {
+		return 0, errors.Wrap(err, "client.CreateOrder")
+	}
 
-	return errors.Wrap(err, "client.CreateOrder")
+	return resp.GetOrderId(), nil
 }
