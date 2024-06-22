@@ -6,7 +6,7 @@ import (
 )
 
 type IOrderRepo interface {
-	CreateOrder(ctx context.Context, userID int64, items []*model.Item) *model.Order
+	CreateOrder(ctx context.Context, userID int64, items []*model.Item) (*model.Order, error)
 	GetOrderByID(ctx context.Context, id int64) (*model.Order, error)
 	SetStatus(ctx context.Context, id int64, status model.Status) error
 }

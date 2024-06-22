@@ -5,8 +5,9 @@ import (
 )
 
 const (
-	grpcPort = 50051
-	httpPort = 8081
+	grpcPort  = 50051
+	httpPort  = 8081
+	dbConnStr = "postgres://test:test@localhost:5432/test?sslmode=disable"
 )
 
 func headerMatcher(key string) (string, bool) {

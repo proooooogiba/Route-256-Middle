@@ -2,21 +2,23 @@ package app
 
 type (
 	Options struct {
-		Addr string
+		Addr, DbConnStr string
 	}
 
 	path struct {
 		string
 	}
 	config struct {
-		addr string
-		path path
+		addr      string
+		dbConnStr string
+		path      path
 	}
 )
 
 func NewConfig(opts Options) config {
 	return config{
-		addr: opts.Addr,
-		path: path{},
+		addr:      opts.Addr,
+		dbConnStr: opts.DbConnStr,
+		path:      path{},
 	}
 }

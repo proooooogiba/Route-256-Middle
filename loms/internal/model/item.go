@@ -1,8 +1,8 @@
 package model
 
 type Item struct {
-	SKU   SKU
-	Count uint16
+	SKU   SKU    `db:"sku"`
+	Count uint16 `db:"item_count"`
 }
 
 type SKU int64

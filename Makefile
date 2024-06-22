@@ -5,4 +5,7 @@ build-all:
 
 
 run-all: build-all
-	docker-compose up --force-recreate --build -d
+	docker-compose up -d postgres-loms && \
+	cd loms && make migration-up && \
+	cd .. && \
+	docker-compose up --build -d cart loms

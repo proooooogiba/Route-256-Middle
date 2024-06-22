@@ -8,9 +8,12 @@ import (
 )
 
 func (c *Order) CreateOrder(ctx context.Context, userID int64, items []*model.Item) (int64, error) {
-	order := c.orderRepo.CreateOrder(ctx, userID, items)
+	order, err := c.orderRepo.CreateOrder(ctx, userID, items)
+	if err != nil {
+		return 0, errors.Wrapf(err, "orderRepo.CreateOrder")
+	}
 
-	err := c.stockRepo.Reserve(ctx, order.Items)
+	err = c.stockRepo.Reserve(ctx, order.Items)
 	if err != nil {
 		errStatus := c.orderRepo.SetStatus(ctx, order.ID, model.Failed)
 		if errStatus != nil {

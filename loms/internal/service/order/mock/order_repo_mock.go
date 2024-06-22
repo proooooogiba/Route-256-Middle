@@ -280,7 +280,7 @@ func (mmCreateOrder *mOrderRepoMockCreateOrder) invocationsDone() bool {
 }
 
 // CreateOrder implements order.IOrderRepo
-func (mmCreateOrder *OrderRepoMock) CreateOrder(ctx context.Context, userID int64, items []*model.Item) (op1 *model.Order) {
+func (mmCreateOrder *OrderRepoMock) CreateOrder(ctx context.Context, userID int64, items []*model.Item) (op1 *model.Order, err error) {
 	mm_atomic.AddUint64(&mmCreateOrder.beforeCreateOrderCounter, 1)
 	defer mm_atomic.AddUint64(&mmCreateOrder.afterCreateOrderCounter, 1)
 
@@ -298,7 +298,7 @@ func (mmCreateOrder *OrderRepoMock) CreateOrder(ctx context.Context, userID int6
 	for _, e := range mmCreateOrder.CreateOrderMock.expectations {
 		if minimock.Equal(*e.params, mm_params) {
 			mm_atomic.AddUint64(&e.Counter, 1)
-			return e.results.op1
+			return e.results.op1, nil
 		}
 	}
 
@@ -331,10 +331,10 @@ func (mmCreateOrder *OrderRepoMock) CreateOrder(ctx context.Context, userID int6
 		if mm_results == nil {
 			mmCreateOrder.t.Fatal("No results are set for the OrderRepoMock.CreateOrder")
 		}
-		return (*mm_results).op1
+		return (*mm_results).op1, nil
 	}
 	if mmCreateOrder.funcCreateOrder != nil {
-		return mmCreateOrder.funcCreateOrder(ctx, userID, items)
+		return mmCreateOrder.funcCreateOrder(ctx, userID, items), nil
 	}
 	mmCreateOrder.t.Fatalf("Unexpected call to OrderRepoMock.CreateOrder. %v %v %v", ctx, userID, items)
 	return

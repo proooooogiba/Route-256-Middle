@@ -13,9 +13,21 @@ services:
   loms:
     container_name: loms
     image: loms
+    depends_on:
+      - postgres-loms
     build:
       context: ./loms
       dockerfile: ./build/Dockerfile
     ports:
       - "8081:8081" # HTTP
       - "50051:50051" # GRPC
+  
+  postgres-loms:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    ports:
+      - "5432:5432"
+  
