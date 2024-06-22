@@ -1,8 +1,10 @@
 package app
 
 import (
+	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/http_handlers"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/middleware"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/client/loms"
 	client "gitlab.ozon.dev/ipogiba/homework/cart/internal/client/product_service"
 	repository "gitlab.ozon.dev/ipogiba/homework/cart/internal/repository/cart"
 	service "gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart"
@@ -20,9 +22,14 @@ func NewApp(config config) (*App, error) {
 	reviewsRepository := repository.NewRepository()
 	productService, err := client.NewProductServiceClient(config.productAddr, config.productToken)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "failed to initialize product service")
 	}
-	cartService := service.NewService(reviewsRepository, productService)
+	lomsService, err := loms.NewLomsServiceClient(config.configLomsService.lomsAddr)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to initialize loms service")
+	}
+
+	cartService := service.NewService(reviewsRepository, productService, lomsService)
 	cartServer := http_handlers.NewCart(cartService)
 
 	mux := http.NewServeMux()
@@ -39,6 +46,7 @@ func (a *App) ListenAndServe() error {
 	a.mux.HandleFunc(a.config.path.deleteProductFromCart, a.cartServer.DeleteProductFromCart)
 	a.mux.HandleFunc(a.config.path.clearCart, a.cartServer.ClearCart)
 	a.mux.HandleFunc(a.config.path.listCartProducts, a.cartServer.ListCartProducts)
+	a.mux.HandleFunc(a.config.path.checkout, a.cartServer.Checkout)
 
 	return a.server.ListenAndServe()
 }

@@ -8,8 +8,6 @@ import (
 	"strconv"
 )
 
-//Checkout(ctx context.Context, userID int64) (int64, error)
-
 type CheckoutResponse struct {
 	OrderID int64 `json:"order_id"`
 }

@@ -9,8 +9,7 @@ services:
       dockerfile: ./build/Dockerfile
     ports:
       - "8082:8082" # HTTP
-      - "50052:50052" # GRPC
-  
+    
   loms:
     container_name: loms
     image: loms
@@ -20,16 +19,3 @@ services:
     ports:
       - "8081:8081" # HTTP
       - "50051:50051" # GRPC
-  
-  swagger:
-    image: swaggerapi/swagger-ui:v5.7.2
-    depends_on:
-      - cart
-      - loms
-    environment:
-      - SWAGGER_JSON=/app/loms.json
-      - URLS=[{"url":"\loms.json","name":"Loms"}]
-    volumes:
-      - ./loms/api/openapiv2/loms.swagger.json:/app/loms.json
-    ports:
-      - "8080:8080"

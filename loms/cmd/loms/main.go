@@ -55,7 +55,7 @@ func main() {
 	}()
 
 	// создаем клиента на наш grpc сервер
-	conn, err := grpc.Dial(fmt.Sprintf(":%d", grpcPort), grpc.WithBlock(), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(fmt.Sprintf(":%d", grpcPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalln("Failed to dial:", err)
 	}
@@ -68,7 +68,7 @@ func main() {
 
 	gwServer := &http.Server{
 		Addr:    fmt.Sprintf(":%d", httpPort),
-		Handler: mw.WithHTTPCorsMiddleware(gwmux),
+		Handler: mw.WithHTTPLoggingMiddleware(gwmux),
 	}
 
 	log.Printf("Serving gRPC-Gateway on %s\n", gwServer.Addr)
