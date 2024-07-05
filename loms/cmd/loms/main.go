@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/jackc/pgx/v5"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/app/loms"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/mw"
-	order2 "gitlab.ozon.dev/ipogiba/homework/loms/internal/repository/order"
-	stock2 "gitlab.ozon.dev/ipogiba/homework/loms/internal/repository/stock"
+	order3 "gitlab.ozon.dev/ipogiba/homework/loms/internal/repository/db/order"
+	stock3 "gitlab.ozon.dev/ipogiba/homework/loms/internal/repository/db/stock"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/service/order"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/service/stock"
 	desc "gitlab.ozon.dev/ipogiba/homework/loms/pkg/api/loms/v1"
@@ -33,12 +34,19 @@ func main() {
 
 	reflection.Register(grpcServer)
 
-	orderRepo := order2.NewOrderRepository()
-	stockRepo, err := stock2.NewStockRepository()
+	ctx := context.Background()
+	dbConn, err := pgx.Connect(ctx, dbConnStr)
 	if err != nil {
-		log.Fatalln("Failed to create stock repository:", err)
+		log.Fatalln("Failed to connect:", err)
 	}
 
+	err = dbConn.Ping(ctx)
+	if err != nil {
+		log.Fatalln("Failed to ping:", err)
+	}
+
+	orderRepo := order3.NewOrderRepository(dbConn)
+	stockRepo := stock3.NewStockRepository(dbConn)
 	orderService := order.NewOrderService(orderRepo, stockRepo)
 	stockService := stock.NewStockService(stockRepo)
 

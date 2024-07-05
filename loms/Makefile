@@ -11,6 +11,25 @@ PROTOC = PATH="$$PATH:$(LOCAL_BIN)" protoc
 # Путь до нашего прото
 LOMS_PROTO_PATH:="api/loms/v1"
 
+ifeq ($(POSTGRES_SETUP_TEST),)
+	POSTGRES_SETUP_TEST := user=test password=test dbname=test host=localhost port=5432 sslmode=disable
+endif
+
+MIGRATION_FOLDER=migrations
+
+.PHONY: migration-create
+migration-create:
+	goose -dir "$(MIGRATION_FOLDER)" create "$(name)" sql
+
+.PHONY: migration-up
+migration-up:
+	goose -dir "$(MIGRATION_FOLDER)" postgres "$(POSTGRES_SETUP_TEST)" up
+
+.PHONY: migration-down
+migration-down:
+	goose -dir "$(MIGRATION_FOLDER)" postgres "$(POSTGRES_SETUP_TEST)" down
+
+
 # Удаляем директорию vendor-proto
 .PHONY: .vendor-rm
 .vendor-rm:
