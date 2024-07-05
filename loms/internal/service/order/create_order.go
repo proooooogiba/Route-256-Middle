@@ -5,6 +5,8 @@ import (
 	"github.com/pkg/errors"
 	errorapp "gitlab.ozon.dev/ipogiba/homework/loms/internal/errors"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func (c *Order) CreateOrder(ctx context.Context, userID int64, items []*model.Item) (int64, error) {
@@ -28,7 +30,7 @@ func (c *Order) CreateOrder(ctx context.Context, userID int64, items []*model.It
 
 	err = c.orderRepo.SetStatus(ctx, order.ID, model.AwaitingPayment)
 	if err != nil {
-		return 0, errors.Wrap(err, "orderRepo.SetStatus")
+		return 0, status.Errorf(codes.FailedPrecondition, err.Error())
 	}
 
 	return order.ID, nil
