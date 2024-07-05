@@ -1,0 +1,22 @@
+[
+  {
+    "sku": 12345,
+    "total_count": 100,
+    "reserved": 20
+  },
+  {
+    "sku": 123456,
+    "total_count": 50,
+    "reserved": 5
+  },
+  {
+    "sku": 1234567,
+    "total_count": 200,
+    "reserved": 30
+  },
+  {
+    "sku": 1076963,
+    "total_count": 120,
+    "reserved": 30
+  }
+]

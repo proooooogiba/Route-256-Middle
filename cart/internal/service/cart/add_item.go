@@ -3,8 +3,8 @@ package cart
 import (
 	"context"
 	"github.com/pkg/errors"
-	errorapp "route256/cart/internal/errors"
-	"route256/cart/internal/model"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 )
 
 func (c *Service) AddItem(ctx context.Context, userID int64, sku model.SKU, count uint16) error {
@@ -14,6 +14,15 @@ func (c *Service) AddItem(ctx context.Context, userID int64, sku model.SKU, coun
 			return err
 		}
 		return errors.Wrap(err, "productService.GetProductBySKU")
+	}
+
+	stockItem, err := c.lomsService.StocksInfo(ctx, sku)
+	if err != nil {
+		return errors.Wrap(err, "lomsService.StocksInfo")
+	}
+
+	if stockItem.Count < uint64(count) {
+		return errorapp.ErrOutOfStock
 	}
 
 	item := model.Item{

@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/gojuno/minimock/v3"
 	"github.com/stretchr/testify/assert"
-	"route256/cart/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"testing"
 )
 

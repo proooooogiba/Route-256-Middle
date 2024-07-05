@@ -2,8 +2,8 @@ package cart
 
 import (
 	"context"
-	errorapp "route256/cart/internal/errors"
-	"route256/cart/internal/model"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 )
 
 func (r *InMemoryRepository) GetItemsByUserID(ctx context.Context, userID int64) ([]model.Item, error) {

@@ -2,10 +2,10 @@ package cart
 
 import (
 	"context"
-	errorapp "route256/cart/internal/errors"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 )
 
-func (r *InMemoryRepository) Clear(ctx context.Context, userID int64) error {
+func (r *InMemoryRepository) DeleteItemsByUserID(ctx context.Context, userID int64) error {
 	r.mtx.Lock()
 	defer r.mtx.Unlock()
 

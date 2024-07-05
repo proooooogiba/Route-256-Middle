@@ -1,5 +1,7 @@
 build-all:
-	cd cart && GOOS=linux GOARCH=amd64 make build
+	cd cart && GOOS=linux GOARCH=amd64 make build && \
+ 	cd .. && \
+	cd loms && GOOS=linux GOARCH=amd64 make build
 
 
 run-all: build-all

@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/pkg/errors"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app"
 	"log"
 	"net/http"
-	"route256/cart/internal/app"
 )
 
 func main() {

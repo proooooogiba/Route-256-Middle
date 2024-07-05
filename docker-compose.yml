@@ -9,3 +9,13 @@ services:
       dockerfile: ./build/Dockerfile
     ports:
       - "8082:8082" # HTTP
+    
+  loms:
+    container_name: loms
+    image: loms
+    build:
+      context: ./loms
+      dockerfile: ./build/Dockerfile
+    ports:
+      - "8081:8081" # HTTP
+      - "50051:50051" # GRPC

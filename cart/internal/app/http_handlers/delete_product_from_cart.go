@@ -2,9 +2,9 @@ package http_handlers
 
 import (
 	"github.com/pkg/errors"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"net/http"
-	errorapp "route256/cart/internal/errors"
-	"route256/cart/internal/model"
 	"strconv"
 )
 

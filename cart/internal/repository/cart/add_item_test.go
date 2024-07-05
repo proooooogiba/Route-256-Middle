@@ -4,9 +4,9 @@ import (
 	"context"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
-	errorapp "route256/cart/internal/errors"
-	"route256/cart/internal/model"
-	"route256/cart/internal/service/cart"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart"
 	"testing"
 )
 

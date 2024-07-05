@@ -8,4 +8,5 @@ var (
 	ErrInvalidUserId = errors.New("invalid user id")
 	ErrInvalidParams = errors.New("invalid params")
 	ErrInvalidBody   = errors.New("invalid body")
+	ErrOutOfStock    = errors.New("out of of stock")
 )
