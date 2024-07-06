@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/http_handlers"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/middleware"
@@ -20,7 +21,7 @@ type App struct {
 
 func NewApp(config config) (*App, error) {
 	reviewsRepository := repository.NewRepository()
-	productService, err := client.NewProductServiceClient(config.productAddr, config.productToken)
+	productService, err := client.NewProductServiceClient(config.productAddr, config.productToken, config.getProductRPSLimit)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to initialize product service")
 	}
@@ -53,6 +54,10 @@ func (a *App) ListenAndServe() error {
 
 func (a *App) Close() error {
 	return a.server.Close()
+}
+
+func (a *App) Shutdown(ctx context.Context) error {
+	return a.server.Shutdown(ctx)
 }
 
 func InitMiddlewares(router *http.ServeMux) http.Handler {

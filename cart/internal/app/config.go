@@ -12,6 +12,7 @@ type (
 
 	configProductService struct {
 		productToken, productAddr string
+		getProductRPSLimit        int
 	}
 	configLomsService struct {
 		lomsAddr string
@@ -31,8 +32,9 @@ func NewConfig(opts Options) config {
 	return config{
 		addr: opts.Addr,
 		configProductService: configProductService{
-			productToken: opts.ProductToken,
-			productAddr:  opts.ProductAddr,
+			productToken:       opts.ProductToken,
+			productAddr:        opts.ProductAddr,
+			getProductRPSLimit: 10,
 		},
 		configLomsService: configLomsService{
 			lomsAddr: opts.GrpcAddr,

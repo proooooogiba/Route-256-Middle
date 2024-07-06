@@ -1,20 +1,28 @@
 package product_service
 
-import "github.com/pkg/errors"
+import (
+	"github.com/pkg/errors"
+	"go.uber.org/ratelimit"
+	"sync"
+)
 
 type ProductService struct {
-	basePath string
-	token    string
+	basePath          string
+	token             string
+	limiterGetProduct ratelimit.Limiter
+	mu                sync.RWMutex
 }
 
-func NewProductServiceClient(basePath string, token string) (*ProductService, error) {
+func NewProductServiceClient(basePath string, token string, getProductRPSLimit int) (*ProductService, error) {
 	if token == "" {
 		return nil, errors.New("product service has empty auth token")
 	}
 
 	return &ProductService{
-		token:    token,
-		basePath: basePath,
+		token:             token,
+		basePath:          basePath,
+		limiterGetProduct: ratelimit.New(getProductRPSLimit),
+		mu:                sync.RWMutex{},
 	}, nil
 }
 

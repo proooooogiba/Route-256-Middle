@@ -22,7 +22,7 @@ services:
     ports:
       - "8081:8081" # HTTP
       - "50051:50051" # GRPC
-    
+
   pg-0:
     image: docker.io/bitnami/postgresql-repmgr:13
     ports:
