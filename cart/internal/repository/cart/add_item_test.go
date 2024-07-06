@@ -7,6 +7,7 @@ import (
 	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart"
+	"go.uber.org/goleak"
 	"testing"
 )
 
@@ -17,6 +18,7 @@ type RepoTestSuite struct {
 }
 
 func TestRepoTestSuite(t *testing.T) {
+	defer goleak.VerifyNone(t)
 	suite.Run(t, new(RepoTestSuite))
 }
 

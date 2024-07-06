@@ -2,6 +2,9 @@ cover:
 	go test -cover ./...
 
 test:
+	go test ./...
+
+race-control:
 	go test -race ./...
 
 build:
