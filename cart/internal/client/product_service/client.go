@@ -3,14 +3,12 @@ package product_service
 import (
 	"github.com/pkg/errors"
 	"go.uber.org/ratelimit"
-	"sync"
 )
 
 type ProductService struct {
 	basePath          string
 	token             string
 	limiterGetProduct ratelimit.Limiter
-	mu                sync.RWMutex
 }
 
 func NewProductServiceClient(basePath string, token string, getProductRPSLimit int) (*ProductService, error) {
@@ -22,7 +20,6 @@ func NewProductServiceClient(basePath string, token string, getProductRPSLimit i
 		token:             token,
 		basePath:          basePath,
 		limiterGetProduct: ratelimit.New(getProductRPSLimit),
-		mu:                sync.RWMutex{},
 	}, nil
 }
 

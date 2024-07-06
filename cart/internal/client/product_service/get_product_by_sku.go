@@ -17,8 +17,6 @@ const handlerGetProduct = "get_product"
 
 func (c *ProductService) GetProductBySKU(ctx context.Context, sku model.SKU) (*model.Product, error) {
 	c.limiterGetProduct.Take()
-	c.mu.RLock()
-	c.mu.RUnlock()
 
 	data := &GetProductsRequest{
 		Token: c.token,
