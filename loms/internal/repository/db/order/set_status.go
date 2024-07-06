@@ -7,7 +7,8 @@ import (
 )
 
 func (r *OrderRepo) SetStatus(ctx context.Context, id int64, status model.Status) error {
-	_, err := r.conn.Exec(ctx, `UPDATE orders SET status = $1 WHERE id = $2`, status, id)
+	query := `UPDATE orders SET status = $1 WHERE id = $2`
+	_, err := r.conn.Exec(ctx, query, status, id)
 	if err != nil {
 		return errors.Wrap(err, "conn.Exec")
 	}
