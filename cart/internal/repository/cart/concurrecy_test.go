@@ -40,7 +40,7 @@ func TestInMemoryRepository_Concurrency(t *testing.T) {
 		err := repo.AddItem(context.Background(), userID, model.Item{SKU: model.SKU(0), Count: 1})
 		assert.NoError(t, err)
 
-		// Add items concurrently
+		// добавляем товары конкурентно
 		for i := 0; i < itemCount; i++ {
 			wg.Add(1)
 			go func(i int) {
@@ -50,7 +50,7 @@ func TestInMemoryRepository_Concurrency(t *testing.T) {
 			}(i)
 		}
 
-		// Get items concurrently while adding
+		// пока добавляем товары, получаем товары пользователя конкуретно
 		for i := 0; i < 10; i++ {
 			wg.Add(1)
 			go func() {
