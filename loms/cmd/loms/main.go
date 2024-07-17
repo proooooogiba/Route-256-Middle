@@ -7,6 +7,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/app/loms"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/mw"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/producer"
 	order3 "gitlab.ozon.dev/ipogiba/homework/loms/internal/repository/db/order"
 	stock3 "gitlab.ozon.dev/ipogiba/homework/loms/internal/repository/db/stock"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/service/order"
@@ -44,10 +45,20 @@ func main() {
 	if err != nil {
 		log.Fatalln("Failed to ping:", err)
 	}
+	producer, err := producer.NewSyncProducer()
+	if err != nil {
+		log.Fatalln("Failed to create sync producer:", err)
+	}
 
 	orderRepo := order3.NewOrderRepository(dbConn)
 	stockRepo := stock3.NewStockRepository(dbConn)
-	orderService := order.NewOrderService(orderRepo, stockRepo)
+
+	orderService := order.NewOrderService(
+		orderRepo,
+		stockRepo,
+		producer,
+		topic,
+	)
 	stockService := stock.NewStockService(stockRepo)
 
 	controller := loms.NewService(orderService, stockService)

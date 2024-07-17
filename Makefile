@@ -5,7 +5,7 @@ build-all:
 
 
 run-all: build-all
-	docker-compose up --force-recreate -d pg-0 pg-1 && \
+	docker-compose up -d postgres-loms kafka-ui kafka0 kafka-init-topics && \
 	cd loms && make migration-up && \
 	cd .. && \
 	docker-compose up --build -d cart loms
