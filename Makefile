@@ -8,4 +8,7 @@ run-all: build-all
 	docker-compose up -d postgres-loms kafka-ui kafka0 kafka-init-topics && \
 	cd loms && make migration-up && \
 	cd .. && \
-	docker-compose up --build -d cart loms
+	docker-compose up --build -d cart loms notifier
+
+show-logs:
+	docker logs homework-notifier-1 && docker logs homework-notifier-2 && docker logs homework-notifier-3

@@ -9,7 +9,17 @@ services:
       dockerfile: ./build/Dockerfile
     ports:
       - "8082:8082" # HTTP
-
+  
+  notifier:
+    image: notifier
+    deploy:
+      replicas: 3
+    build:
+      context: ./notifier
+      dockerfile: ./build/Dockerfile
+    depends_on:
+      - kafka0
+ 
   postgres-loms:
     image: postgres:13
     environment:
@@ -24,13 +34,13 @@ services:
     image: loms
     depends_on:
       - postgres-loms
+      - kafka0
     build:
       context: ./loms
       dockerfile: ./build/Dockerfile
     ports:
       - "8081:8081" # HTTP
       - "50051:50051" # GRPC
-  
   
   kafka-ui:
     container_name: homework-kafka-ui
@@ -43,7 +53,7 @@ services:
       DYNAMIC_CONFIG_ENABLED: "true"
 
   kafka0:
-    container_name: homework-kafka
+    container_name: homework-kafka0
     image: confluentinc/cp-kafka:7.5.4.arm64
     ports:
       - "9092:9092"
@@ -60,7 +70,7 @@ services:
       KAFKA_PROCESS_ROLES: "broker,controller"
       KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
-  
+      
   kafka-init-topics:
     container_name: homework-init-topics
     image: confluentinc/cp-kafka:7.5.4.arm64
@@ -69,4 +79,3 @@ services:
     command: "bash -c 'echo Waiting for Kafka to be ready... && \
       cub kafka-ready -b kafka0:29092 1 30 && \
       kafka-topics --create --topic loms.order-events --partitions 2 --replication-factor 1 --if-not-exists --bootstrap-server kafka0:29092'"
-  
