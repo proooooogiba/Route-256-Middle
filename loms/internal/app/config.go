@@ -2,14 +2,16 @@ package app
 
 type (
 	Options struct {
-		Addr, DbConnStr string
+		Addr, DbConnStr, GrpcAddr, Topic string
 	}
 
 	path struct {
 		string
 	}
 	config struct {
-		addr      string
+		grpcPort  string
+		httpPort  string
+		topic     string
 		dbConnStr string
 		path      path
 	}
@@ -17,8 +19,10 @@ type (
 
 func NewConfig(opts Options) config {
 	return config{
-		addr:      opts.Addr,
 		dbConnStr: opts.DbConnStr,
+		grpcPort:  opts.GrpcAddr,
+		httpPort:  opts.Addr,
+		topic:     opts.Topic,
 		path:      path{},
 	}
 }

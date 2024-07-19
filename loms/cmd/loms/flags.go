@@ -1,7 +1,10 @@
 package main
 
 import (
-	"strings"
+	"flag"
+	"fmt"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/app"
+	"strconv"
 )
 
 const (
@@ -13,11 +16,12 @@ const (
 
 var brokers = []string{"localhost:9092"}
 
-func headerMatcher(key string) (string, bool) {
-	switch strings.ToLower(key) {
-	case "x-auth":
-		return key, true
-	default:
-		return key, false
-	}
+var opts = app.Options{}
+
+func initOpts() {
+	flag.StringVar(&opts.Addr, "addr", strconv.Itoa(httpPort), fmt.Sprintf("server address, default: %d", httpPort))
+	flag.StringVar(&opts.GrpcAddr, "grpc-addr", strconv.Itoa(grpcPort), fmt.Sprintf("grpc address: %d", grpcPort))
+	flag.StringVar(&opts.DbConnStr, "db-conn-str", dbConnStr, "database connection string")
+	flag.StringVar(&opts.Topic, "topic", topic, "topic name")
+	flag.Parse()
 }
