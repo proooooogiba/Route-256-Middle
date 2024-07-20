@@ -2,10 +2,11 @@ package cart
 
 import (
 	"context"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
-	"testing"
 )
 
 func (s *RepoTestSuite) TestGetItemsByUserID() {

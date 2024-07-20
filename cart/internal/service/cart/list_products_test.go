@@ -2,11 +2,12 @@ package cart
 
 import (
 	"context"
+	"testing"
+
 	"github.com/gojuno/minimock/v3"
 	"github.com/stretchr/testify/assert"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/http_handlers"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
-	"testing"
 )
 
 func (s *cartServiceTestSuite) TestListProducts() {

@@ -1,8 +1,9 @@
 package cart
 
 import (
-	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"sync"
+
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 )
 
 type InMemoryRepository struct {

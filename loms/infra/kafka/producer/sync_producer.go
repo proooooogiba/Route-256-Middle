@@ -2,6 +2,7 @@ package producer
 
 import (
 	"fmt"
+
 	"gitlab.ozon.dev/ipogiba/homework/loms/infra/kafka"
 
 	"github.com/IBM/sarama"

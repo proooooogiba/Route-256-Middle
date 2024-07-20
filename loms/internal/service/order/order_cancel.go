@@ -2,9 +2,10 @@ package order
 
 import (
 	"context"
+	"log"
+
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
-	"log"
 )
 
 func (c *Order) OrderCancel(ctx context.Context, id int64) error {

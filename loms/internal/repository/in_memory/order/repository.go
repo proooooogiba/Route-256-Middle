@@ -1,8 +1,9 @@
 package order
 
 import (
-	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 	"sync"
+
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
 type OrderInMemoryRepo struct {

@@ -13,9 +13,7 @@ type ConsumerGroupHandler struct {
 	ready chan bool
 }
 
-func NewConsumerGroupHandler(
-// map[topic]TopicHandler
-) *ConsumerGroupHandler {
+func NewConsumerGroupHandler() *ConsumerGroupHandler {
 	return &ConsumerGroupHandler{}
 }
 

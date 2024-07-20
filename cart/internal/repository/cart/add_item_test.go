@@ -2,13 +2,14 @@ package cart
 
 import (
 	"context"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart"
 	"go.uber.org/goleak"
-	"testing"
 )
 
 type RepoTestSuite struct {

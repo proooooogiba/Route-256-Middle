@@ -2,8 +2,9 @@ package main
 
 import (
 	"context"
-	"gitlab.ozon.dev/ipogiba/homework/loms/internal/app"
 	"log"
+
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/app"
 )
 
 func main() {

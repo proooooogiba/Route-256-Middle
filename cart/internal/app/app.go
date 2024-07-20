@@ -2,6 +2,8 @@ package app
 
 import (
 	"context"
+	"net/http"
+
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/http_handlers"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/middleware"
@@ -9,7 +11,6 @@ import (
 	client "gitlab.ozon.dev/ipogiba/homework/cart/internal/client/product_service"
 	repository "gitlab.ozon.dev/ipogiba/homework/cart/internal/repository/cart"
 	service "gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart"
-	"net/http"
 )
 
 type App struct {

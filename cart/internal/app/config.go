@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/definitions"
 )
 

@@ -6,10 +6,11 @@ package mock
 
 import (
 	"context"
-	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 	"sync"
 	mm_atomic "sync/atomic"
 	mm_time "time"
+
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 
 	"github.com/gojuno/minimock/v3"
 )

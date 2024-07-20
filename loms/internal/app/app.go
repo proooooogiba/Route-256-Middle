@@ -3,6 +3,11 @@ package app
 import (
 	"context"
 	"fmt"
+	"log"
+	"net"
+	"net/http"
+	"strings"
+
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/jackc/pgx/v5"
 	"github.com/pkg/errors"
@@ -17,10 +22,6 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"
-	"log"
-	"net"
-	"net/http"
-	"strings"
 )
 
 type App struct {

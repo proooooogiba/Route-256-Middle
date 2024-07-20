@@ -19,6 +19,8 @@ services:
       dockerfile: ./build/Dockerfile
     depends_on:
       - kafka0
+    environment:
+      - "kafka0:29092"
  
   postgres-loms:
     image: postgres:13
@@ -41,6 +43,9 @@ services:
     ports:
       - "8081:8081" # HTTP
       - "50051:50051" # GRPC
+    environment:
+        DATABASE_URL: "postgres://test:test@postgres-loms:5432/test"
+        KAFKA_BROKERS: "kafka0:29092"
   
   kafka-ui:
     container_name: homework-kafka-ui

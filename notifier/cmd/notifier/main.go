@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/IBM/sarama"
 	"log"
 	"notifier/infra/kafka/consumer_group"
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
+
+	"github.com/IBM/sarama"
 )
 
 var cliFlags = flags{}

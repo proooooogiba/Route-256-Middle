@@ -2,8 +2,6 @@ package main
 
 import (
 	"context"
-	"github.com/pkg/errors"
-	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app"
 	"log"
 	"net/http"
 	"os"
@@ -11,6 +9,9 @@ import (
 	"sync"
 	"syscall"
 	"time"
+
+	"github.com/pkg/errors"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app"
 )
 
 func main() {

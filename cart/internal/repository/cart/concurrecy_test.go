@@ -2,10 +2,11 @@ package cart
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
-	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"sync"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 )
 
 func TestInMemoryRepository_Concurrency(t *testing.T) {

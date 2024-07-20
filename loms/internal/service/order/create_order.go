@@ -2,12 +2,13 @@ package order
 
 import (
 	"context"
+	"log"
+
 	"github.com/pkg/errors"
 	errorapp "gitlab.ozon.dev/ipogiba/homework/loms/internal/errors"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"log"
 )
 
 func (c *Order) CreateOrder(ctx context.Context, userID int64, items []*model.Item) (int64, error) {

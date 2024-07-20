@@ -4,13 +4,14 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/pkg/errors"
-	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
-	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"io"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/pkg/errors"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 )
 
 const handlerGetProduct = "get_product"

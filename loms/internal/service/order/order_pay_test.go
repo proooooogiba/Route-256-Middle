@@ -2,12 +2,13 @@ package order
 
 import (
 	"context"
+	"testing"
+
 	"github.com/gojuno/minimock/v3"
 	"github.com/stretchr/testify/require"
 	errorapp "gitlab.ozon.dev/ipogiba/homework/loms/internal/errors"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/service/order/mock"
-	"testing"
 )
 
 func TestOrderPay(t *testing.T) {

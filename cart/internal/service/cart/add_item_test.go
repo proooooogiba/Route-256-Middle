@@ -2,6 +2,8 @@ package cart
 
 import (
 	"context"
+	"testing"
+
 	"github.com/gojuno/minimock/v3"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
@@ -9,7 +11,6 @@ import (
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart/mock"
 	"go.uber.org/goleak"
-	"testing"
 )
 
 var ErrNoNil = errors.New("fail")

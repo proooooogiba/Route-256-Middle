@@ -2,13 +2,15 @@ package producer
 
 import (
 	"context"
+	"os"
+	"sync"
+	"time"
+
 	"github.com/IBM/sarama"
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/loms/infra/kafka"
 	"gitlab.ozon.dev/ipogiba/homework/loms/infra/kafka/producer"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
-	"sync"
-	"time"
 )
 
 // SyncProducer ...
@@ -20,7 +22,7 @@ type SyncProducer struct {
 func NewSyncProducer() (*SyncProducer, error) {
 	config := kafka.Config{
 		Brokers: []string{
-			"localhost:9092",
+			os.Getenv("KAFKA_BROKERS"),
 		},
 	}
 	syncProducer, err := producer.NewSyncProducer(config,

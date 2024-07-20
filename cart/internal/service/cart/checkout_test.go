@@ -2,9 +2,10 @@ package cart
 
 import (
 	"context"
+	"testing"
+
 	"github.com/stretchr/testify/require"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
-	"testing"
 )
 
 func (s *cartServiceTestSuite) TestCheckout() {

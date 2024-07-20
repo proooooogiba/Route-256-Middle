@@ -2,11 +2,12 @@ package cart
 
 import (
 	"context"
+	"sync"
+
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/http_handlers"
 	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/pkg/errgroup"
-	"sync"
 )
 
 func (c *Service) ListProducts(ctx context.Context, userID int64) (*http_handlers.ListCartProductsResponse, error) {

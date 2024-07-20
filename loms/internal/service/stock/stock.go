@@ -2,6 +2,7 @@ package stock
 
 import (
 	"context"
+
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
