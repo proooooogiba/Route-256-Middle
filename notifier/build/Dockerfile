@@ -14,4 +14,4 @@ FROM scratch
 COPY --from=builder server /bin/server
 
 #USER nonroot:nonroot
-ENTRYPOINT ["/bin/server", "-bootstrap-server=kafka0:29092"]
+ENTRYPOINT ["/bin/server"]
