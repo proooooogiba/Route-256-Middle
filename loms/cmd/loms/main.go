@@ -10,11 +10,16 @@ import (
 func main() {
 	initOpts()
 
+	log.Println("loms app strating..")
+
 	ctx := context.Background()
 	lomsApp, err := app.NewApp(ctx, app.NewConfig(opts))
 	if err != nil {
 		log.Fatalln(err)
 	}
+	defer lomsApp.Close()
+
+	log.Println("loms app started")
 
 	lomsApp.ServeGrpcServer()
 

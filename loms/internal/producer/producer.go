@@ -2,7 +2,6 @@ package producer
 
 import (
 	"context"
-	"os"
 	"sync"
 	"time"
 
@@ -19,11 +18,9 @@ type SyncProducer struct {
 	producer sarama.SyncProducer
 }
 
-func NewSyncProducer() (*SyncProducer, error) {
+func NewSyncProducer(brokers []string) (*SyncProducer, error) {
 	config := kafka.Config{
-		Brokers: []string{
-			os.Getenv("KAFKA_BROKERS"),
-		},
+		Brokers: brokers,
 	}
 	syncProducer, err := producer.NewSyncProducer(config,
 		producer.WithIdempotent(),
@@ -73,4 +70,8 @@ func (sp *SyncProducer) SendMessage(ctx context.Context, msg model.ProducerMessa
 	}
 	_, _, err := sp.producer.SendMessage(saramaMsg)
 	return errors.Wrap(err, "failed to send message")
+}
+
+func (sp *SyncProducer) Close() {
+	sp.producer.Close()
 }

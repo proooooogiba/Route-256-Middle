@@ -1,14 +1,18 @@
 build-all:
 	cd cart && GOOS=linux GOARCH=amd64 make build && \
  	cd .. && \
-	cd loms && GOOS=linux GOARCH=amd64 make build
-
+	cd loms && GOOS=linux GOARCH=amd64 make build && \
+	cd .. && \
+	cd notifier && GOOS=linux GOARCH=amd64 make build
 
 run-all: build-all
-	docker-compose up -d postgres-loms kafka-ui kafka0 kafka-init-topics && \
-	cd loms && make migration-up && \
+	docker-compose up --force-recreate -d postgres-loms kafka-ui kafka0 kafka-init-topics && \
+	cd loms && make container-migration-up && \
 	cd .. && \
-	docker-compose up --build -d cart loms notifier
+	docker-compose up --build -d cart notifier loms
 
-show-logs:
-	docker logs homework-notifier-1 && docker logs homework-notifier-2 && docker logs homework-notifier-3
+logs-notifier:
+	echo 1 2 3 | xargs -n 1 -I {} docker logs homework-notifier-{}
+
+logs-loms:
+	docker logs loms

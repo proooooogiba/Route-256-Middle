@@ -3,10 +3,12 @@ package app
 import (
 	"context"
 	"fmt"
+	"github.com/ds248a/closer"
 	"log"
 	"net"
 	"net/http"
 	"strings"
+	"syscall"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/jackc/pgx/v5"
@@ -28,11 +30,14 @@ type App struct {
 	config     config
 	grpcServer *grpc.Server
 	lis        net.Listener
+	closer     *closer.Closer
 
 	gatewayServer *http.Server
 }
 
 func NewApp(ctx context.Context, config config) (*App, error) {
+	cl := closer.NewCloser()
+
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", config.grpcPort))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -50,14 +55,16 @@ func NewApp(ctx context.Context, config config) (*App, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to connect to database")
 	}
+	cl.Add(func() { _ = dbConn.Close(ctx) })
 
 	orderRepo := order3.NewOrderRepository(dbConn)
 	stockRepo := stock2.NewStockRepository(dbConn)
 
-	producer, err := producer.NewSyncProducer()
+	producer, err := producer.NewSyncProducer(config.brokers)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create sync producer")
 	}
+	cl.Add(producer.Close)
 
 	orderService := order.NewOrderService(
 		orderRepo,
@@ -77,7 +84,12 @@ func NewApp(ctx context.Context, config config) (*App, error) {
 		config:     config,
 		grpcServer: grpcServer,
 		lis:        lis,
+		closer:     cl,
 	}, nil
+}
+
+func (a *App) Close() {
+	a.closer.Close(syscall.SIGTERM)
 }
 
 func (a *App) ServeGrpcServer() {

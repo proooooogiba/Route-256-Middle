@@ -15,15 +15,25 @@ ifeq ($(POSTGRES_SETUP_TEST),)
 	POSTGRES_SETUP_TEST := user=test password=test dbname=test host=localhost port=5432 sslmode=disable
 endif
 
+# хост контейнера
+CONTAINER_HOST = postgres-loms
+ifeq ($(POSTGRES_SETUP_CONTAINER),)
+	POSTGRES_SETUP_CONTAINER := user=test password=test dbname=test host=$(CONTAINER_HOST) port=5432 sslmode=disable
+endif
+
 MIGRATION_FOLDER=migrations
 
 .PHONY: migration-create
 migration-create:
 	goose -dir "$(MIGRATION_FOLDER)" create "$(name)" sql
 
-.PHONY: migration-up
-migration-up:
+.PHONY: local-migration-up
+local-migration-up:
 	goose -dir "$(MIGRATION_FOLDER)" postgres "$(POSTGRES_SETUP_TEST)" up
+
+.PHONY: container-migration-up
+migration-up:
+	goose -dir "$(MIGRATION_FOLDER)" postgres "$(POSTGRES_SETUP_CONTAINER)" up
 
 .PHONY: migration-down
 migration-down:
