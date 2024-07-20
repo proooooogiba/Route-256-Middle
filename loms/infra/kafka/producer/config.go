@@ -10,8 +10,8 @@ func PrepareConfig(opts ...Option) *sarama.Config {
 	c := sarama.NewConfig()
 
 	{
-		// алгоритм выбора партиции - по ключу
-		c.Producer.Partitioner = sarama.NewHashPartitioner
+		// алгоритм выбора партиции - round robin
+		c.Producer.Partitioner = sarama.NewRoundRobinPartitioner
 	}
 
 	// acks параметр

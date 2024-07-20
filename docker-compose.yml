@@ -14,14 +14,13 @@ services:
     image: notifier
     deploy:
       replicas: 3
-    depends_on:
-      - kafka-init-topics
     build:
       context: ./notifier
       dockerfile: ./build/Dockerfile
+    depends_on:
+      - kafka0
   
   postgres-loms:
-    container_name: postgres-loms
     image: postgres:13
     environment:
       POSTGRES_DB: test
@@ -29,24 +28,20 @@ services:
       POSTGRES_PASSWORD: test
     ports:
       - "5432:5432"
-   
+  
   loms:
     container_name: loms
     image: loms
     depends_on:
-      - notifier
       - postgres-loms
-      - kafka-init-topics
+      - kafka0
     build:
       context: ./loms
       dockerfile: ./build/Dockerfile
     ports:
       - "8081:8081" # HTTP
       - "50051:50051" # GRPC
-    environment:
-        DATABASE_URL: "postgres://test:test@postgres-loms:5432/test"
-        KAFKA_BROKERS: "localhost:9092"
-
+  
   kafka-ui:
     container_name: homework-kafka-ui
     image: provectuslabs/kafka-ui:latest
@@ -58,7 +53,7 @@ services:
       DYNAMIC_CONFIG_ENABLED: "true"
 
   kafka0:
-    container_name: kafka0
+    container_name: homework-kafka0
     image: confluentinc/cp-kafka:7.5.4.arm64
     ports:
       - "9092:9092"
@@ -75,7 +70,7 @@ services:
       KAFKA_PROCESS_ROLES: "broker,controller"
       KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
-      
+  
   kafka-init-topics:
     container_name: homework-init-topics
     image: confluentinc/cp-kafka:7.5.4.arm64
