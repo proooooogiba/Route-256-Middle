@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"gitlab.ozon.dev/ipogiba/homework/loms/internal/app"
 	"os"
 	"strconv"
+
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/app"
 )
 
 const (

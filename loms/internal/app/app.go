@@ -3,12 +3,13 @@ package app
 import (
 	"context"
 	"fmt"
-	"github.com/ds248a/closer"
 	"log"
 	"net"
 	"net/http"
 	"strings"
 	"syscall"
+
+	"github.com/ds248a/closer"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/jackc/pgx/v5"
@@ -35,7 +36,7 @@ type App struct {
 	gatewayServer *http.Server
 }
 
-func NewApp(ctx context.Context, config config) (*App, error) {
+func New(ctx context.Context, config config) (*App, error) {
 	cl := closer.NewCloser()
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", config.grpcPort))

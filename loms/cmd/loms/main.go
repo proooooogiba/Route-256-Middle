@@ -13,7 +13,7 @@ func main() {
 	log.Println("loms app strating..")
 
 	ctx := context.Background()
-	lomsApp, err := app.NewApp(ctx, app.NewConfig(opts))
+	lomsApp, err := app.New(ctx, app.NewConfig(opts))
 	if err != nil {
 		log.Fatalln(err)
 	}
