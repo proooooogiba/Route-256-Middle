@@ -6,6 +6,7 @@ build-all:
 	cd notifier && GOOS=linux GOARCH=amd64 make build
 
 run-all: build-all
+	docker-compose down && \
 	docker-compose up --force-recreate -d postgres-loms kafka-ui kafka0 kafka-init-topics && \
 	cd loms && make container-migration-up && \
 	cd .. && \

@@ -14,11 +14,11 @@ services:
     image: notifier
     deploy:
       replicas: 3
+    depends_on:
+      - kafka-init-topics
     build:
       context: ./notifier
       dockerfile: ./build/Dockerfile
-    depends_on:
-      - kafka0
     environment:
       KAFKA_HOST: "kafka0:29092"
   
@@ -36,16 +36,18 @@ services:
     image: loms
     depends_on:
       - postgres-loms
-      - kafka0
+      - kafka-init-topics
     build:
       context: ./loms
       dockerfile: ./build/Dockerfile
     ports:
       - "8081:8081" # HTTP
       - "50051:50051" # GRPC
+      - "5432"
     environment:
-      KAFKA_HOST: "kafka0:29092"
-  
+      DATABASE_URL: "postgres://test:test@postgres-loms:5432/test"
+      KAFKA_BROKERS: "kafka0:29092"
+
   kafka-ui:
     container_name: homework-kafka-ui
     image: provectuslabs/kafka-ui:latest
@@ -61,6 +63,7 @@ services:
     image: confluentinc/cp-kafka:7.5.4.arm64
     ports:
       - "9092:9092"
+      - "29092:29092"
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
