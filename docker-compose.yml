@@ -30,12 +30,28 @@ services:
       POSTGRES_PASSWORD: test
     ports:
       - "5432:5432"
-  
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  migrations:
+    depends_on:
+      - postgres-loms
+    image: ghcr.io/kukymbr/goose-docker:3.21.1
+    environment:
+      GOOSE_DRIVER: "postgres"
+      GOOSE_DBSTRING: "host=postgres-loms port=5432 user=test password=test dbname=test"
+    volumes:
+      - ./loms/migrations:/migrations
+
   loms:
     container_name: loms
     image: loms
     depends_on:
-      - postgres-loms
+      - migrations
       - kafka-init-topics
     build:
       context: ./loms
@@ -86,3 +102,9 @@ services:
     command: "bash -c 'echo Waiting for Kafka to be ready... && \
       cub kafka-ready -b kafka0:29092 1 30 && \
       kafka-topics --create --topic loms.order-events --partitions 2 --replication-factor 1 --if-not-exists --bootstrap-server kafka0:29092'"
+
+networks:
+  new:
+    
+volumes:
+  postgres_data:
