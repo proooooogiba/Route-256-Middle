@@ -2,13 +2,14 @@ package app
 
 import (
 	"context"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/cache"
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/client/product_service_in_memory_cache"
 	"net/http"
 
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/http_handlers"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/middleware"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/client/loms"
-	client "gitlab.ozon.dev/ipogiba/homework/cart/internal/client/product_service"
 	repository "gitlab.ozon.dev/ipogiba/homework/cart/internal/repository/cart"
 	service "gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart"
 )
@@ -22,7 +23,14 @@ type App struct {
 
 func NewApp(config config) (*App, error) {
 	reviewsRepository := repository.NewRepository()
-	productService, err := client.NewProductServiceClient(config.productAddr, config.productToken, config.getProductRPSLimit)
+
+	productCache := cache.New(config.cacheSize)
+	productService, err := product_service_in_memory_cache.NewProductServiceInMemoryCacheClient(
+		config.productAddr,
+		config.productToken,
+		config.getProductRPSLimit,
+		productCache,
+	)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to initialize product service")
 	}

@@ -14,6 +14,7 @@ type (
 	configProductService struct {
 		productToken, productAddr string
 		getProductRPSLimit        int
+		cacheSize                 uint
 	}
 	configLomsService struct {
 		lomsAddr string
@@ -36,6 +37,7 @@ func NewConfig(opts Options) config {
 			productToken:       opts.ProductToken,
 			productAddr:        opts.ProductAddr,
 			getProductRPSLimit: 10,
+			cacheSize:          100,
 		},
 		configLomsService: configLomsService{
 			lomsAddr: opts.GrpcAddr,
