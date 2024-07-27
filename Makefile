@@ -6,7 +6,9 @@ build-all:
 	cd notifier && GOOS=linux GOARCH=amd64 make build
 
 start-all: build-all
-	docker-compose up -d
+	docker-compose up -d && \
+	sleep 5 && \
+    docker-compose up -d
 
 stop-all:
 	docker-compose down

@@ -36,5 +36,6 @@ func initOpts() {
 	flag.StringVar(&opts.Brokers, "brokers", kafkaBrokersVar, "kafka brokers string")
 
 	flag.StringVar(&opts.Topic, "topic", topic, "topic name")
+
 	flag.Parse()
 }
