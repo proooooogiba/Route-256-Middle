@@ -3,15 +3,16 @@ package app
 import (
 	"context"
 	"fmt"
-	"github.com/jackc/pgx/v5/pgxpool"
-	"gitlab.ozon.dev/ipogiba/homework/loms/internal/pkg/shard_manager"
-	order3 "gitlab.ozon.dev/ipogiba/homework/loms/internal/repository/db/order"
-	stock2 "gitlab.ozon.dev/ipogiba/homework/loms/internal/repository/db/stock"
 	"log"
 	"net"
 	"net/http"
 	"strings"
 	"syscall"
+
+	"github.com/jackc/pgx/v5/pgxpool"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/pkg/shard_manager"
+	order3 "gitlab.ozon.dev/ipogiba/homework/loms/internal/repository/db/order"
+	stock2 "gitlab.ozon.dev/ipogiba/homework/loms/internal/repository/db/stock"
 
 	"github.com/ds248a/closer"
 
@@ -30,14 +31,14 @@ import (
 )
 
 type App struct {
-	config     config
+	config     Config
 	grpcServer *grpc.Server
 	lis        net.Listener
 
 	gatewayServer *http.Server
 }
 
-func New(ctx context.Context, config config) (*App, error) {
+func New(ctx context.Context, config Config) (*App, error) {
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", config.grpcPort))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)

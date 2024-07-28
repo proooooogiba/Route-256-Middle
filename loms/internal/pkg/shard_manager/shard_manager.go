@@ -3,6 +3,7 @@ package shard_manager
 import (
 	"errors"
 	"fmt"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/spaolacci/murmur3"
 )
@@ -45,7 +46,7 @@ func (m *Manager) GetShardIndex(key ShardKey) ShardIndex {
 }
 
 func (m *Manager) GetShardIndexFromID(id int64) ShardIndex {
-	return ShardIndex(id % 1000)
+	return ShardIndex(id % 2)
 }
 
 func (m *Manager) Pick(index ShardIndex) (*pgxpool.Pool, error) {

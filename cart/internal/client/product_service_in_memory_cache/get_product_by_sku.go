@@ -2,8 +2,9 @@ package product_service_in_memory_cache
 
 import (
 	"context"
-	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"log"
+
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 )
 
 func (c *ProductServiceInMemoryCache) GetProductBySKU(ctx context.Context, sku model.SKU) (*model.Product, error) {

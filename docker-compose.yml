@@ -41,37 +41,13 @@ services:
       POSTGRES_PASSWORD: ${DOCKER_POSTGRES_PASSWORD_2}
     ports:
       - ${DOCKER_POSTGRES_HOST_PORT_2}:5432
-  
-  postgres-loms:
-    image: postgres:13
-    environment:
-      POSTGRES_DB: test
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-  migrations:
-    depends_on:
-      - postgres-loms
-    image: ghcr.io/kukymbr/goose-docker:3.21.1
-    environment:
-      GOOSE_DRIVER: "postgres"
-      GOOSE_DBSTRING: "host=postgres-loms port=5432 user=test password=test dbname=test"
-    volumes:
-      - ./loms/migrations:/migrations
 
   loms:
     container_name: loms
     image: loms
     depends_on:
-      - migrations
+      - postgres-shard-1
+      - postgres-shard-2
       - kafka-init-topics
     build:
       context: ./loms
@@ -79,10 +55,10 @@ services:
     ports:
       - "8081:8081" # HTTP
       - "50051:50051" # GRPC
-      - "5432"
     environment:
-      DATABASE_URL: ${DATABASE_LOMS_URL}
       KAFKA_BROKERS: ${KAFKA_BROKERS}
+      DOCKER_POSTGRES_DB_URL_1: ${DOCKER_POSTGRES_DB_URL_1}
+      DOCKER_POSTGRES_DB_URL_2: ${DOCKER_POSTGRES_DB_URL_2}
 
   kafka-ui:
     container_name: homework-kafka-ui

@@ -2,9 +2,10 @@ package app
 
 import (
 	"context"
+	"net/http"
+
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/cache"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/client/product_service_in_memory_cache"
-	"net/http"
 
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/http_handlers"

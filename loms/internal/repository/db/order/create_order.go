@@ -2,8 +2,9 @@ package order
 
 import (
 	"context"
-	"gitlab.ozon.dev/ipogiba/homework/loms/internal/pkg/shard_manager"
 	"strconv"
+
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/pkg/shard_manager"
 
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"

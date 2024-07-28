@@ -2,9 +2,10 @@ package cache
 
 import (
 	"context"
+	"sync"
+
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
-	"sync"
 )
 
 type Cacher interface {
