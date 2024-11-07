@@ -1,10 +1,7 @@
 syntax = "proto3";
 
-package gitlab.ozon.dev.ipogiba.homework.loms.pkg.api.loms.v1;
-
 option go_package = "gitlab.ozon.dev/ipogiba/homework/loms/pkg/api/loms/v1;loms";
 
-import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";

@@ -2,6 +2,7 @@ package order
 
 import (
 	"context"
+
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
@@ -17,14 +18,28 @@ type IStockRepo interface {
 	ReserveCancel(ctx context.Context, items []*model.Item) error
 }
 
+type IProducer interface {
+	SendMessages(ctx context.Context, msgs []model.ProducerMessage) error
+	SendMessage(ctx context.Context, msg model.ProducerMessage) error
+}
+
 type Order struct {
 	orderRepo IOrderRepo
 	stockRepo IStockRepo
+	producer  IProducer
+	topic     string
 }
 
-func NewOrderService(orderRepo IOrderRepo, stockRepo IStockRepo) *Order {
+func NewOrderService(
+	orderRepo IOrderRepo,
+	stockRepo IStockRepo,
+	producer IProducer,
+	topic string,
+) *Order {
 	return &Order{
 		orderRepo: orderRepo,
 		stockRepo: stockRepo,
+		producer:  producer,
+		topic:     topic,
 	}
 }

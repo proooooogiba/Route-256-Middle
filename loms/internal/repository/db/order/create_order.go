@@ -2,12 +2,22 @@ package order
 
 import (
 	"context"
+	"strconv"
+
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/pkg/shard_manager"
+
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
 func (r *OrderRepo) CreateOrder(ctx context.Context, userID int64, items []*model.Item) (*model.Order, error) {
-	tx, err := r.conn.Begin(ctx)
+	shIndex := r.sm.GetShardIndex(shard_manager.ShardKey(strconv.FormatInt(userID, 10)))
+	db, err := r.sm.Pick(shIndex)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to pick db")
+	}
+
+	tx, err := db.Begin(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "begin transaction")
 	}

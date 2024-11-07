@@ -2,12 +2,14 @@ package cart
 
 import (
 	"context"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart"
-	"testing"
+	"go.uber.org/goleak"
 )
 
 type RepoTestSuite struct {
@@ -17,6 +19,7 @@ type RepoTestSuite struct {
 }
 
 func TestRepoTestSuite(t *testing.T) {
+	defer goleak.VerifyNone(t)
 	suite.Run(t, new(RepoTestSuite))
 }
 

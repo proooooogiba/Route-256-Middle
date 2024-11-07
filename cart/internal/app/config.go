@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/app/definitions"
 )
 
@@ -12,6 +13,8 @@ type (
 
 	configProductService struct {
 		productToken, productAddr string
+		getProductRPSLimit        int
+		cacheSize                 uint
 	}
 	configLomsService struct {
 		lomsAddr string
@@ -31,8 +34,10 @@ func NewConfig(opts Options) config {
 	return config{
 		addr: opts.Addr,
 		configProductService: configProductService{
-			productToken: opts.ProductToken,
-			productAddr:  opts.ProductAddr,
+			productToken:       opts.ProductToken,
+			productAddr:        opts.ProductAddr,
+			getProductRPSLimit: 10,
+			cacheSize:          100,
 		},
 		configLomsService: configLomsService{
 			lomsAddr: opts.GrpcAddr,

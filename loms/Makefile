@@ -17,18 +17,21 @@ endif
 
 MIGRATION_FOLDER=migrations
 
+# MIGRATION START
+
 .PHONY: migration-create
 migration-create:
 	goose -dir "$(MIGRATION_FOLDER)" create "$(name)" sql
 
-.PHONY: migration-up
-migration-up:
+.PHONY: local-migration-up
+local-migration-up:
 	goose -dir "$(MIGRATION_FOLDER)" postgres "$(POSTGRES_SETUP_TEST)" up
 
 .PHONY: migration-down
 migration-down:
 	goose -dir "$(MIGRATION_FOLDER)" postgres "$(POSTGRES_SETUP_TEST)" down
 
+# MIGRATION END
 
 # Удаляем директорию vendor-proto
 .PHONY: .vendor-rm

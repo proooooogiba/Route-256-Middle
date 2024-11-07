@@ -2,13 +2,15 @@ package cart
 
 import (
 	"context"
+	"testing"
+
 	"github.com/gojuno/minimock/v3"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"gitlab.ozon.dev/ipogiba/homework/cart/internal/service/cart/mock"
-	"testing"
+	"go.uber.org/goleak"
 )
 
 var ErrNoNil = errors.New("fail")
@@ -24,6 +26,7 @@ type cartServiceTestSuite struct {
 }
 
 func TestCartServiceSuite(t *testing.T) {
+	defer goleak.VerifyNone(t)
 	suite.Run(t, new(cartServiceTestSuite))
 }
 

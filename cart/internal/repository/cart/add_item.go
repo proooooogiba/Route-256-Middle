@@ -2,8 +2,9 @@ package cart
 
 import (
 	"context"
-	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 	"sort"
+
+	"gitlab.ozon.dev/ipogiba/homework/cart/internal/model"
 )
 
 func (r *InMemoryRepository) AddItem(ctx context.Context, userID int64, item model.Item) error {

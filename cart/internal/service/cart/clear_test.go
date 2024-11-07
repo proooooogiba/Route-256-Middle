@@ -2,8 +2,9 @@ package cart
 
 import (
 	"context"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func (s *cartServiceTestSuite) TestClear() {

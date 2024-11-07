@@ -2,11 +2,12 @@ package stock
 
 import (
 	"encoding/json"
-	"github.com/pkg/errors"
-	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 	"io"
 	"os"
 	"sync"
+
+	"github.com/pkg/errors"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
 
 type StockInMemoryRepo struct {

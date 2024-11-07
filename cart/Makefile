@@ -4,6 +4,9 @@ cover:
 test:
 	go test ./...
 
+race-control:
+	go test -race ./...
+
 build:
 	go build cmd/cart/*.go
 

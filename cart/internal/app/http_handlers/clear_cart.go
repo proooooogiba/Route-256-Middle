@@ -1,10 +1,11 @@
 package http_handlers
 
 import (
-	"github.com/pkg/errors"
-	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 	"net/http"
 	"strconv"
+
+	"github.com/pkg/errors"
+	errorapp "gitlab.ozon.dev/ipogiba/homework/cart/internal/errors"
 )
 
 func (i *Implementation) ClearCart(w http.ResponseWriter, r *http.Request) {

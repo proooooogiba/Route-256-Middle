@@ -1,18 +1,22 @@
 package order
 
 import (
-	sq "github.com/Masterminds/squirrel"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
+	"gitlab.ozon.dev/ipogiba/homework/loms/internal/pkg/shard_manager"
 )
 
-var psql = sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
-
-type OrderRepo struct {
-	conn *pgx.Conn
+type shardManager interface {
+	GetShardIndex(key shard_manager.ShardKey) shard_manager.ShardIndex
+	GetShardIndexFromID(id int64) shard_manager.ShardIndex
+	Pick(key shard_manager.ShardIndex) (*pgxpool.Pool, error)
 }
 
-func NewOrderRepository(conn *pgx.Conn) *OrderRepo {
+type OrderRepo struct {
+	sm shardManager
+}
+
+func NewOrderRepository(sm shardManager) *OrderRepo {
 	return &OrderRepo{
-		conn: conn,
+		sm: sm,
 	}
 }

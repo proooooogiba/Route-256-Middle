@@ -2,12 +2,13 @@ package order
 
 import (
 	"context"
+	"testing"
+
 	"github.com/gojuno/minimock/v3"
 	"github.com/stretchr/testify/require"
 	errorapp "gitlab.ozon.dev/ipogiba/homework/loms/internal/errors"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/service/order/mock"
-	"testing"
 )
 
 func TestCreateOrder(t *testing.T) {
@@ -111,6 +112,7 @@ func TestCreateOrder(t *testing.T) {
 
 	for _, tt := range testData {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 			tt.prepare(&fieldsForTableTest)
 			id, err := service.CreateOrder(ctx, tt.userID, tt.items)
 			require.Equal(t, tt.expectedID, id)

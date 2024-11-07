@@ -2,6 +2,8 @@ package order
 
 import (
 	"context"
+	"log"
+
 	"github.com/pkg/errors"
 	"gitlab.ozon.dev/ipogiba/homework/loms/internal/model"
 )
@@ -12,8 +14,7 @@ func (c *Order) OrderPay(ctx context.Context, id int64) error {
 		return errors.Wrap(err, "orderRepo.GetOrderByID")
 	}
 
-	payment := model.AwaitingPayment
-	if order.Status != payment.String() {
+	if order.Status != model.AwaitingPayment.String() {
 		return errors.New("order status is not awaiting payment")
 	}
 
@@ -25,6 +26,10 @@ func (c *Order) OrderPay(ctx context.Context, id int64) error {
 	err = c.orderRepo.SetStatus(ctx, order.ID, model.Payed)
 	if err != nil {
 		return errors.Wrap(err, "order.SetStatus")
+	}
+	err = c.sendOrderEvent(ctx, order, model.Payed)
+	if err != nil {
+		log.Printf("failed to send order event: %v", err)
 	}
 
 	return nil
